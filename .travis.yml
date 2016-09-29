@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "6"
+  - "6.1"
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'CREATE DATABASE winely_test;' -U postgres
+
+install:
+  - npm install
+
+script:
+  npm test
