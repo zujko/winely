@@ -76,6 +76,7 @@ CREATE TABLE users (
   name text NOT NULL,
   email text NOT NULL,
   password text,
+  role smallint NOT NULL DEFAULT 0,
   likes bigint NOT NULL DEFAULT 0,
   bio text
 );
