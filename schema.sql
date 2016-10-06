@@ -1,5 +1,5 @@
- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
- CREATE EXTENSION "pgcrypto";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION "pgcrypto";
 
 CREATE TABLE region (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
