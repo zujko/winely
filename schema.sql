@@ -1,5 +1,10 @@
+/* Before creation run 
+ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+ CREATE EXTENSION "pgcrypto";
+ */
+
 CREATE TABLE region (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
   climate_type text NOT NULL,
   title text NOT NULL,
   description text,
@@ -8,7 +13,7 @@ CREATE TABLE region (
 );
 
 CREATE TABLE vineyard (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
   name text NOT NULL,
   location point,
   description text,
@@ -18,7 +23,7 @@ CREATE TABLE vineyard (
 );
 
 CREATE TABLE wine (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
   name text NOT NULL,
   vintage integer NOT NULL,
   vineyard_id uuid REFERENCES vineyard(id),
@@ -38,7 +43,7 @@ CREATE TABLE wine (
 );
 
 CREATE TABLE grape (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
   name text NOT NULL,
   description text,
   image_thumb uuid,
@@ -52,14 +57,14 @@ CREATE TABLE grape (
 );
 
 CREATE TABLE grape_component (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
   wine_id uuid REFERENCES wine(id),
   grape_id uuid REFERENCES grape(id),
   percent real
 );
 
 CREATE TABLE foods (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
   name text NOT NULL,
   picture uuid,
   fatty boolean NOT NULL,
@@ -72,7 +77,7 @@ CREATE TABLE foods (
 );
 
 CREATE TABLE users (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
   name text NOT NULL,
   email text NOT NULL,
   password text,
@@ -82,7 +87,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE comments (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
   user_id uuid REFERENCES users(id),
   title text,
   date_posted timestamp NOT NULL,
@@ -92,7 +97,7 @@ CREATE TABLE comments (
 );
 
 CREATE TABLE vintage_attrs (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc(),
   year int NOT NULL,
   region_id uuid REFERENCES region(id),
   comment_ text
