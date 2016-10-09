@@ -2,9 +2,27 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/styles/layout.css' />
+    <link rel='stylesheet' href='/styles/nav.css' />
+    <link rel='stylesheet' href='/styles/text.css' />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300|Roboto" rel="stylesheet">
   </head>
   <body>
+    <nav>
+      <div class="brand-stripe"></div>
+      <div class="nav__row">
+        <div class="nav__items">
+          <a class="nav__items__item" href="/">Home</a>
+          <a class="nav__items__item" href="/wines">Wines</a>
+          <a class="nav__items__item" href="/produces">Producers</a>
+          <a class="nav__items__item" href="/regions">Regions</a>
+          <a class="nav__items__item" href="/foods">Foods</a>
+        </div>
+      </div>
+    </nav>
     {{{body}}}
+    <footer>
+      
+    </footer>
   </body>
 </html>

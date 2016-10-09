@@ -1,0 +1,41 @@
+/**
+ * Author: Nathan C. Castle 
+ * Note: Follows Block-Element-Modifier Convention
+ *     : Block - standalone entity meaningful on its own (header)
+ *     : Element - Parts of block with no standalone meaning (menu item, list item)
+ *     : Modifier - Flags on blocks or elements (highlighted, fixed, checked)
+ **/
+@import 'globals';
+
+h1 {
+  font-family: @font-headings;
+  font-size: 3em;
+  color: @color-foreground;
+}
+
+h1.--inverse {
+  color: white;
+}
+
+h2 {
+  font-family: @font-headings;
+  font-size: 2em;
+  color: @color-foreground;
+}
+
+h3 {
+  font-family: @font-headings;
+  font-size: 1.5em;
+  color: @color-foreground;
+}
+
+h4 {
+  font-family: @font-headings;
+  font-size: 1.5em;
+  color: @color-foreground;
+}
+
+p {
+  font-family: @font-primary;
+  color: @color-foreground;
+}
