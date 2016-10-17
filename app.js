@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var expressLess = require('express-less');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -9,6 +10,9 @@ var helmet = require('helmet');
 var routes = require('./routes/index');
 
 var app = express();
+
+//Less CSS setup
+app.use('/styles', expressLess(__dirname + '/styles'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

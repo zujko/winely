@@ -1,0 +1,112 @@
+/**
+ * Author: Nathan C. Castle 
+ * Note: Follows Block-Element-Modifier Convention
+ *     : Block - standalone entity meaningful on its own (header)
+ *     : Element - Parts of block with no standalone meaning (menu item, list item)
+ *     : Modifier - Flags on blocks or elements (highlighted, fixed, checked)
+ **/
+
+@import 'globals';
+
+body {
+  margin: 0px 0px 0px 0px;
+  font-family: @font-primary;
+  padding-top: 65px;
+  background-color: @color-background;
+}
+
+.cover { /** uses cover photo**/
+  background-image: url('/images/cover.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.row {
+  display: flex;
+  min-height: 10em;
+}
+
+.row--hero {
+  padding-left: 0px;
+  padding-right: 0px;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 20em;
+}
+
+.row--columnar {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-left: @side-padding;
+  margin-right: @side-padding;
+}
+
+.row--hero .row__column {
+  min-height: 5em;
+  flex-basis: 2 * @block-width;
+  text-align: center;
+}
+
+.row__column {
+  min-height: 5em;
+  flex-grow: 1;
+  flex-basis: @block-width;
+}
+.row__column--double {
+  flex-grow: 2;
+  flex-basis: 2 * @block-width;
+}
+
+@media (max-width: @mobile-width) {
+  .row--columnar {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: @side-padding;
+    padding-bottom: @side-padding;
+  }
+  .row__column {
+    min-height: 5em;
+    flex-basis: initial;
+    margin-top: @side-padding;
+    margin-bottom: @side-padding;
+  }
+  .row__column--double {
+    min-height: 5em;
+    flex-basis: initial;
+    flex-grow: 1;
+    margin-top: @side-padding;
+    margin-bottom: @side-padding;
+  }
+}
+
+
+
+.highlight_panel {
+  border-top-width: @color-bar-thickness;
+  border-top-color: @color-primary;
+  border-top-style: solid;
+  margin-left: @side-padding;
+  margin-right: @side-padding;
+  margin-top: @side-padding;
+  padding-left: @side-padding;
+  padding-right: @side-padding;
+  height: 100%;
+  text-align: center;
+  background-color: @color-background-bright;
+}
+
+.highlight_panel--primary {
+  border-top-color: @color-primary;
+}
+
+.highlight_panel--secondary {
+  border-top-color: @color-secondary;
+}
+
+.highlight_panel--tertiary {
+  border-top-color: @color-tertiary;
+}

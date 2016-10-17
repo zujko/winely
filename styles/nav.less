@@ -1,0 +1,58 @@
+/**
+ * Author: Nathan C. Castle 
+ * Note: Follows Block-Element-Modifier Convention
+ *     : Block - standalone entity meaningful on its own (header)
+ *     : Element - Parts of block with no standalone meaning (menu item, list item)
+ *     : Modifier - Flags on blocks or elements (highlighted, fixed, checked)
+ **/
+@import 'globals';
+
+ nav {
+   position: fixed;
+   width: 100%;
+   height: 65px;
+   top: 0;
+   padding-top:0px;
+   margin:0px 0px;
+   background-color: @color-background-bright;
+ }
+
+.nav__row {
+  margin-left: @side-margin;
+  margin-right: @side-margin;
+  margin-top:0px;
+  height: 60px;
+  background-image: linear-gradient(to right, @color-active, @color-primary, @color-secondary);
+}
+
+.nav__items {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+}
+
+.nav__items__item {
+  float: left;
+  width: calc(25% + 5em);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: @color-foreground;
+  background-color: @color-background-bright;
+}
+
+.nav__items__item:hover {
+  background-color: rgba(1, 1, 1, 0);
+  color: @color-background;
+}
+
+.brand-stripe { 
+  height: @color-bar-thickness;
+  background-image: linear-gradient(to right, @color-active, @color-primary, @color-secondary);
+  display: block;
+  width: 100%;
+}
