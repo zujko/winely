@@ -1,0 +1,69 @@
+extends ../layout.pug
+
+block content
+  .row.row--hero.cover
+    .row__column
+      h1.--inverse=viewmodel.name
+      h2.--inverse #{viewmodel.rating} | #{viewmodel.count_reviews} Reviews
+  .row--bar.row--databar
+    .row__datacolumn.row__datacolumn--first
+      h2=viewmodel.percentAlcohol
+    .row__datacolumn
+      h2=viewmodel.price
+    .row__datacolumn
+      h2=viewmodel.color
+    .row__datacolumn
+      h2=viewmodel.year
+  h2.--row__heading Overview
+  .row.row--longformtext
+    .row__text_panel
+      p=viewmodel.summary
+  .row.row--columnar
+    .row__column.row__column--double
+      .row.row--columnar--nopad
+        .row__column
+          .multiselect_panel(onclick="select('panel_acid');")
+            .datacontainer--vertical
+              .datashaded--vertical(style="height: 50px; margin-top:50px;")
+                span.datalabel Medium
+            h3 Acid
+        .row__column
+          .multiselect_panel(onclick="select('panel_alcohol');")
+            .datacontainer--vertical
+              .datashaded--vertical(style="height: 90px; margin-top:10px;")
+                span.datalabel 14.5%
+            h3 Alcohol
+        .row__column
+          .multiselect_panel(onclick="select('panel_body');")
+            .datacontainer--vertical
+              .datashaded--vertical(style="height: 40px; margin-top:60px;")
+                span.datalabel Creamy
+            h3 Body
+        .row__column
+          .multiselect_panel(onclick="select('panel_tannin');")
+            .datacontainer--vertical
+              .datashaded--vertical(style="height: 20px; margin-top:80px;")
+                span.datalabel Low
+            h3 Tannin
+    .row__column
+      .highlight_panel#panel_acid
+          h3 Fast Facts: Acid
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      .highlight_panel#panel_alcohol(style="display:none;")
+          h3 Fast Facts: Alcohol
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      .highlight_panel#panel_body(style="display:none;")
+          h3 Fast Facts: Body
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      .highlight_panel#panel_tannin(style="display:none;")
+          h3 Fast Facts: Tannin
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+
+  script.
+    function select (element) {
+      document.getElementById("panel_acid").style.display = 'none';
+      document.getElementById("panel_alcohol").style.display = 'none';
+      document.getElementById("panel_body").style.display = 'none';
+      document.getElementById("panel_tannin").style.display = 'none';
+      document.getElementById(element).style.display = '';
+    }
