@@ -1,0 +1,34 @@
+/**
+ * Author: Nathan C. Castle 
+ * File: Charts
+ * Note: Follows Block-Element-Modifier Convention
+ *     : Block - standalone entity meaningful on its own (header)
+ *     : Element - Parts of block with no standalone meaning (menu item, list item)
+ *     : Modifier - Flags on blocks or elements (highlighted, fixed, checked)
+ **/
+
+@import 'globals';
+
+/** outer container for a row in a bar chart**/
+.datacontainer--vertical {
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  border-color: @color-secondary;
+  border-width: 1px;
+  border-style: solid;
+  height: 100px;
+  background-color: @color-background-bright;
+}
+
+.datashaded--vertical {
+  background-color: @color-secondary;
+  width: 100%;
+  display: table;
+}
+
+.datalabel {
+  color: @color-background-bright;
+  display: table-cell;
+  vertical-align: middle;
+}

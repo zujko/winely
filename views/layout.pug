@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet',href='/styles/style.css')
+    
+    link(href="https://fonts.googleapis.com/css?family=Open+Sans:300|Roboto",rel="stylesheet")
+  body
+    nav(class='navbar navbar-default navbar-fixed-top')
+      .brand-stripe
+      .container-fluid
+        .navbar-header
+          button(type='button',class='navbar-toggle collapsed',data-toggle='collapse',data-target='nav-collapse',aria-expanded='false')
+            span(class='sr-only') Toggle navigation
+            span(class='icon-bar')
+            span(class='icon-bar')
+            span(class='icon-bar')
+          a(class='navbar-brand',href='/') Winely
+        #nav-collapse(class='collapse navbar-collapse')
+          ul(class='nav navbar-nav')
+            li
+              a(href='/wines') Wines
+            li
+              a(href='/producers') Producers
+            li
+              a(href='/regions') Regions
+            li
+              a(href='/foods') Foods
+          ul(class='nav navbar-nav navbar-right')
+            li
+              a(href='/login') login
+    .container
+      block content
+    script(src='/jquery-3.1.1.min.js')
+    script(src='/bootstrap.min.js')
