@@ -23,9 +23,35 @@ body {
   background-size: cover;
 }
 
-.row {
+.row-janky {
   display: flex;
   min-height: 10em;
+}
+
+.row--bar {
+  display: flex;
+  min-height: 2em;
+  background-image: linear-gradient(to bottom, @color-background-bright, @color-background);
+}
+
+.row--longformtext {
+  padding-left: 0px;
+  padding-right: 0px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.row__text_panel {
+  border-top-width: @color-bar-thickness;
+  border-top-color: @color-primary;
+  border-top-style: solid;
+  padding-left: @side-padding;
+  padding-right: @side-padding;
+  height: 100%;
+  text-align: left;
+  max-width: 1000px;
+  background-color: @color-background-bright;
 }
 
 .row--hero {
@@ -37,12 +63,27 @@ body {
   min-height: 20em;
 }
 
+.row--databar {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-top-width: @color-bar-thickness;
+  border-top-color: @color-primary;
+  border-top-style: solid;
+}
+
 .row--columnar {
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
   margin-left: @side-padding;
   margin-right: @side-padding;
+  margin-top: @side-padding;
+}
+
+.row--columnar--nopad {
+  .row--columnar;
+  margin-top: 0em;
 }
 
 .row--hero .row__column {
@@ -51,8 +92,19 @@ body {
   text-align: center;
 }
 
+.row__datacolumn {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  border-left-width: @color-bar-thickness;
+  border-left-color: @color-primary;
+  border-left-style: solid;
+}
+
+.row__datacolumn--first {
+  border-left-style: none;
+}
+
 .row__column {
-  min-height: 5em;
   flex-grow: 1;
   flex-basis: @block-width;
 }
@@ -69,13 +121,11 @@ body {
     padding-bottom: @side-padding;
   }
   .row__column {
-    min-height: 5em;
     flex-basis: initial;
     margin-top: @side-padding;
     margin-bottom: @side-padding;
   }
   .row__column--double {
-    min-height: 5em;
     flex-basis: initial;
     flex-grow: 1;
     margin-top: @side-padding;
@@ -86,27 +136,51 @@ body {
 
 
 .highlight_panel {
-  border-top-width: @color-bar-thickness;
-  border-top-color: @color-primary;
-  border-top-style: solid;
+  
   margin-left: @side-padding;
   margin-right: @side-padding;
   margin-top: @side-padding;
   padding-left: @side-padding;
   padding-right: @side-padding;
-  height: 100%;
   text-align: center;
   background-color: @color-background-bright;
+  padding-bottom: @side-padding;
+  padding-top: @side-padding;
 }
 
 .highlight_panel--primary {
   border-top-color: @color-primary;
+  border-top-style: solid;
+  border-top-width: @color-bar-thickness;
 }
 
 .highlight_panel--secondary {
   border-top-color: @color-secondary;
+  border-top-style: solid;
+  border-top-width: @color-bar-thickness;
 }
 
 .highlight_panel--tertiary {
   border-top-color: @color-tertiary;
+  border-top-style: solid;
+  border-top-width: @color-bar-thickness;
+}
+
+.multiselect_panel {
+  margin-top: @side-padding;
+  padding-left: @side-padding;
+  padding-right: @side-padding;
+  padding-top: @side-padding;
+  padding-bottom: @side-padding;
+  text-align: center;
+  background-color: @color-background-bright;
+}
+
+.multiselect_panel:hover {
+  margin-top: @side-padding;
+  padding-left: @side-padding;
+  padding-right: @side-padding;
+  padding-bottom: @side-padding;
+  text-align: center;
+  background-color: @color-background-dark;
 }
