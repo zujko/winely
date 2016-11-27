@@ -10,13 +10,13 @@ html
       .brand-stripe
       .container-fluid
         .navbar-header
-          button(type='button',class='navbar-toggle collapsed',data-toggle='collapse',data-target='nav-collapse',aria-expanded='false')
+          button(type='button',class='navbar-toggle collapsed',data-toggle='collapse',data-target='#nav-collapse',aria-expanded='false')
             span(class='sr-only') Toggle navigation
             span(class='icon-bar')
             span(class='icon-bar')
             span(class='icon-bar')
           a(class='navbar-brand',href='/') Winely
-        #nav-collapse(class='collapse navbar-collapse')
+        div#nav-collapse(class='navbar-collapse collapse')
           ul(class='nav navbar-nav')
             li
               a(href='/wines') Wines
@@ -26,10 +26,15 @@ html
               a(href='/regions') Regions
             li
               a(href='/foods') Foods
+            form.navbar-form.navbar-left(action="/search/results",method="get",role="search")
+              .form-group
+                .input-group.text-center
+                  input.form-control(name="query")
+                  span.input-group-btn
+                    button.btn.btn-default(type="submit") Search
           ul(class='nav navbar-nav navbar-right')
             li
               a(href='/login') login
-    .container
-      block content
+    block content
     script(src='/jquery-3.1.1.min.js')
     script(src='/bootstrap.min.js')

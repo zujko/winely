@@ -15,6 +15,7 @@ var wineroutes = require('./routes/wines');
 var producerroutes = require('./routes/producers');
 var regionroutes = require('./routes/regions');
 var foodroutes = require('./routes/foods');
+var searchroutes = require('./routes/search');
 
 var app = express();
 
@@ -53,6 +54,7 @@ app.use('/wines/', wineroutes);
 app.use('/producers/', producerroutes);
 app.use('/regions/', regionroutes);
 app.use('/foods/', foodroutes);
+app.use('/search/', searchroutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

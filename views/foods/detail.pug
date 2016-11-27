@@ -1,0 +1,75 @@
+extends ../layout.pug
+
+block content
+  .row.row--hero.cover
+    .row__column
+      h1.--inverse=viewmodel.name
+  .container
+    .row
+      .col-md-12
+        .panel.panel-default
+          .panel-heading.text-center Description
+          .panel-body
+            p #{viewmodel.description}
+    .row
+      .col-xs-2
+        .panel.panel-default
+          .panel-heading Fatty
+          .panel-body 
+            if viewmodel.fatty
+              p This is a fatty food. Fatty foods pair well with high-acid wines.
+            else
+              p This is a low fat food and may be overpowered by high-acid wines.
+      .col-xs-3
+        .panel.panel-default
+          .panel-heading Sweet
+          .panel-body 
+            if viewmodel.sweet
+              p This is a sweet food. Seek a wine that is as sweet or sweeter than this food.
+            else
+              p This food isn't sweet. Avoid highly sweet wines.
+      .col-xs-2
+        .panel.panel-default
+          .panel-heading Dense
+          .panel-body 
+            if viewmodel.dense
+              p This is a dense food. Seek a light, refreshing, or even sparkling wine.
+            else
+              p This is a light food and should be paired with a medium-body wine.
+      .col-xs-3
+        .panel.panel-default
+          .panel-heading Starchy
+          .panel-body 
+            if viewmodel.starchy
+              p This is a starchy food. Starchy foods pair well with high-acid wines.
+            else
+              p This is not a starchy food and may be overpowered by high-acid wines.
+      .col-xs-2
+        .panel.panel-default
+          .panel-heading Delicate
+          .panel-body 
+            if viewmodel.delicate
+              p This is a delicate food. Seek an unoaked white or red wine.
+            else
+              p This is a strong food. Seek oaked red wine.
+    h1.text-center Suggested wines
+    hr
+    .row
+      each wine, index in viewmodel.suggested_wines
+        .col-md-2.hidden-sm.hidden-xs
+          .panel.panel-default
+            .panel-heading=wine.name
+            .panel-body.text-center
+              img(src="/static/images/" + wine.picture + ".jpg")
+              p #{wine.color} - #{wine.price}
+            .panel-footer.text-center
+              a.btn.btn-default(href="/wines/details/" + wine.id) See More
+        if index < 4
+          .col-xs-3.col-sm-3.hidden-md.hidden-lg
+            .panel.panel-default
+              .panel-heading=wine.name
+              .panel-body.text-center
+                img(src="/static/images/" + wine.picture + ".jpg")
+                p #{wine.color} - #{wine.price}
+              .panel-footer.text-center
+                a.btn.btn-default(href="/wines/details/" + wine.id) See More
