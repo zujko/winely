@@ -6,6 +6,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var helmet = require('helmet');
+var stormpath = require('express-stormpath');
+const pg = require('pg');
+const connectionString = 'postgres://localhost:5432/winely';
 
 var routes = require('./routes/index');
 var wineroutes = require('./routes/wines');
@@ -15,6 +18,20 @@ var foodroutes = require('./routes/foods');
 var searchroutes = require('./routes/search');
 
 var app = express();
+
+app.use(stormpath.init(app, {
+  website: true,
+  postRegistrationHandler: function (account, req, res, next) {
+    console.log('Registered: '+account.email);
+    var client = new pg.Client(connectionString);
+    client.connect();
+    client.query('INSERT INTO users(name, email) VALUES($1, $2)',[account.givenName+' '+account.surname, account.email]);
+    client.end(function(err) {
+      if (err) throw err;
+    });
+    next();
+  }
+}));
 
 //Less CSS setup
 app.use('/styles', expressLess(__dirname + '/styles'));
