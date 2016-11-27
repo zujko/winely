@@ -1,0 +1,13 @@
+extends ../layout.pug
+
+block content
+  h2.text-center Search
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-body
+          form(action="/search/results",method="get")
+            .input-group.text-center
+              input.form-control(name="query",value=viewmodel.search_query)
+              span.input-group-btn
+                button.btn.btn-default(type="submit") Search

@@ -26,6 +26,12 @@ html
               a(href='/regions') Regions
             li
               a(href='/foods') Foods
+            form.navbar-form.navbar-left(action="/search/results",method="get",role="search")
+              .form-group
+                .input-group.text-center
+                  input.form-control(name="query")
+                  span.input-group-btn
+                    button.btn.btn-default(type="submit") Search
           ul(class='nav navbar-nav navbar-right')
             li
               a(href='/login') login
