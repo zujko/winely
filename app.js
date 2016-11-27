@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var helmet = require('helmet');
+var stormpath = require('express-stormpath');
 
 var routes = require('./routes/index');
 var wineroutes = require('./routes/wines');
@@ -14,6 +15,10 @@ var regionroutes = require('./routes/regions');
 var foodroutes = require('./routes/foods');
 
 var app = express();
+
+app.use(stormpath.init(app, {
+  website: true
+}));
 
 //Less CSS setup
 app.use('/styles', expressLess(__dirname + '/styles'));
