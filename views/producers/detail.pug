@@ -1,0 +1,32 @@
+extends ../layout.pug
+
+block content
+  .row.row--hero.cover
+    .row__column
+      h1.--inverse=viewmodel.name
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-heading.text-center Description
+        .panel-body
+          p #{viewmodel.description}
+  h1.text-center All Wines
+  hr
+  .row
+    each wine, index in viewmodel.wines
+      .col-sm-3
+        .panel.panel-default
+          .panel-heading=wine.name
+          .panel-body.text-center
+            img(src="/static/images/" + wine.picture + ".jpg")
+            p #{wine.color} - #{wine.price}
+          .panel-footer.text-center
+            a.btn.btn-default(href="/wines/details/" + wine.id) See More
+  h1.text-center Region
+  hr
+  .row
+    .col-sm-12
+      .panel.panel-default
+        .panel-heading=viewmodel.region.name
+        .panel-body.text-center
+          p #{viewmodel.region.description}
