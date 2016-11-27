@@ -1,0 +1,45 @@
+extends ../layout.pug
+
+block content
+  .row.row--hero.cover
+    .row__column
+      h1.--inverse=viewmodel.name
+      h2.--inverse=viewmodel.climate
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-heading.text-center Description
+        .panel-body
+          p #{viewmodel.description}
+  h1.text-center Suggested Wines
+  hr
+  .row
+    each wine, index in viewmodel.suggested_wines
+      .col-sm-3
+        .panel.panel-default
+          .panel-heading=wine.name
+          .panel-body.text-center
+            img(src="/static/images/" + wine.picture + ".jpg")
+            p #{wine.color} - #{wine.price}
+          .panel-footer.text-center
+            a.btn.btn-default(href="/wines/details/" + wine.id) See More
+  h1.text-center Suggested Producers
+  hr
+  .row
+    each producer, index in viewmodel.suggested_producers
+      .col-sm-3
+        .panel.panel-default
+          .panel-heading=producer.name
+          .panel-body.text-center
+            img(src="/static/images/" + producer.picture + ".jpg")
+          .panel-footer.text-center
+            a.btn.btn-default(href="/producers/details/" + producer.id) See More
+  h1.text-center Vintage History
+  hr
+  .row
+    each vintage, index in viewmodel.vintages
+      .col-sm-4
+        .panel.panel-default
+          .panel-heading=vintage.year
+          .panel-body.text-center
+            p #{vintage.description}
