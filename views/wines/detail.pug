@@ -5,102 +5,103 @@ block content
     .row__column
       h1.--inverse=viewmodel.name
       h2.--inverse #{viewmodel.rating} | #{viewmodel.reviews.length} Reviews
-  .row--bar.row--databar
-    .row__datacolumn.row__datacolumn--first
-      h2=viewmodel.percentAlcohol
-    .row__datacolumn
-      h2=viewmodel.price
-    .row__datacolumn
-      h2=viewmodel.color
-    .row__datacolumn
-      h2=viewmodel.vintage.year
-  h2.--row__heading Overview
-  .row.row--longformtext
-    .row__text_panel
-      p=viewmodel.summary
-  .row-janky.row--columnar
-    .row__column.row__column--double
-      .row-janky.row--columnar--nopad
-        .row__column
-          .multiselect_panel(onclick="select('panel_acid');")
-            .datacontainer--vertical
-              .datashaded--vertical(style="height: 50px; margin-top:50px;")
-                span.datalabel Medium
-            h3 Acid
-        .row__column
-          .multiselect_panel(onclick="select('panel_alcohol');")
-            .datacontainer--vertical
-              .datashaded--vertical(style="height: 90px; margin-top:10px;")
-                span.datalabel 14.5%
-            h3 Alcohol
-        .row__column
-          .multiselect_panel(onclick="select('panel_body');")
-            .datacontainer--vertical
-              .datashaded--vertical(style="height: 40px; margin-top:60px;")
-                span.datalabel Creamy
-            h3 Body
-        .row__column
-          .multiselect_panel(onclick="select('panel_tannin');")
-            .datacontainer--vertical
-              .datashaded--vertical(style="height: 20px; margin-top:80px;")
-                span.datalabel Low
-            h3 Tannin
-    .row__column
-      .highlight_panel#panel_acid
-          h3 Fast Facts: Acid
-          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      .highlight_panel#panel_alcohol(style="display:none;")
-          h3 Fast Facts: Alcohol
-          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      .highlight_panel#panel_body(style="display:none;")
-          h3 Fast Facts: Body
-          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      .highlight_panel#panel_tannin(style="display:none;")
-          h3 Fast Facts: Tannin
-          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-  hr
-  .row
-    .col-md-6.col-sm-12
-      .panel.panel-default
-        .panel-heading
-          h3.text-center Vineyard
-        .panel-body
-          h4.text-center=viewmodel.vineyard.name
-          p.text-center=viewmodel.vineyard.description
-        .panel-footer.text-right
-          a.btn.btn-default(href="/producers/" + viewmodel.vineyard.id) Learn More
-    .col-md-6.col-sm-12
-      .panel.panel-default
-        .panel-heading
-          h3.text-center Vintage &amp; Region
-        .panel-body
-          h4.text-center #{viewmodel.vintage.year} in #{viewmodel.vintage.region.name}
-          p.text-center=viewmodel.vintage.comment
-        .panel-footer.text-right
-          a.btn.btn-default(href="/regions/" + viewmodel.vintage.region.id) Learn More
-  h1.text-center Recommended Foods
-  hr
-  .row
-    each food in viewmodel.foods
-      .col-md-4
+  .container
+    .row--bar.row--databar
+      .row__datacolumn.row__datacolumn--first
+        h2=viewmodel.percentAlcohol
+      .row__datacolumn
+        h2=viewmodel.price
+      .row__datacolumn
+        h2=viewmodel.color
+      .row__datacolumn
+        h2=viewmodel.vintage.year
+    h2.--row__heading Overview
+    .row.row--longformtext
+      .row__text_panel
+        p=viewmodel.summary
+    .row-janky.row--columnar
+      .row__column.row__column--double
+        .row-janky.row--columnar--nopad
+          .row__column
+            .multiselect_panel(onclick="select('panel_acid');")
+              .datacontainer--vertical
+                .datashaded--vertical(style="height: 50px; margin-top:50px;")
+                  span.datalabel Medium
+              h3 Acid
+          .row__column
+            .multiselect_panel(onclick="select('panel_alcohol');")
+              .datacontainer--vertical
+                .datashaded--vertical(style="height: 90px; margin-top:10px;")
+                  span.datalabel 14.5%
+              h3 Alcohol
+          .row__column
+            .multiselect_panel(onclick="select('panel_body');")
+              .datacontainer--vertical
+                .datashaded--vertical(style="height: 40px; margin-top:60px;")
+                  span.datalabel Creamy
+              h3 Body
+          .row__column
+            .multiselect_panel(onclick="select('panel_tannin');")
+              .datacontainer--vertical
+                .datashaded--vertical(style="height: 20px; margin-top:80px;")
+                  span.datalabel Low
+              h3 Tannin
+      .row__column
+        .highlight_panel#panel_acid
+            h3 Fast Facts: Acid
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        .highlight_panel#panel_alcohol(style="display:none;")
+            h3 Fast Facts: Alcohol
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        .highlight_panel#panel_body(style="display:none;")
+            h3 Fast Facts: Body
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        .highlight_panel#panel_tannin(style="display:none;")
+            h3 Fast Facts: Tannin
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+    hr
+    .row
+      .col-md-6.col-sm-12
         .panel.panel-default
           .panel-heading
-            h3=food.name
+            h3.text-center Vineyard
           .panel-body
-            img(src="/static/img/" + food.picture + ".jpg")
-          .panel-footer
-            a.btn.btn-default(href="/foods/" + food.id) See Why
-  h1.text-center Reviews
-  hr
-  .row
-    each review in viewmodel.reviews
-      .col-md-12
+            h4.text-center=viewmodel.vineyard.name
+            p.text-center=viewmodel.vineyard.description
+          .panel-footer.text-right
+            a.btn.btn-default(href="/producers/" + viewmodel.vineyard.id) Learn More
+      .col-md-6.col-sm-12
         .panel.panel-default
-          .panel-heading #{review.title} - #{review.date}
+          .panel-heading
+            h3.text-center Vintage &amp; Region
           .panel-body
-            p #{review.stars} / 5 stars - Posted By #{review.user.name}
-            .well=review.body
-  
+            h4.text-center #{viewmodel.vintage.year} in #{viewmodel.vintage.region.name}
+            p.text-center=viewmodel.vintage.comment
+          .panel-footer.text-right
+            a.btn.btn-default(href="/regions/" + viewmodel.vintage.region.id) Learn More
+    h1.text-center Recommended Foods
+    hr
+    .row
+      each food in viewmodel.foods
+        .col-md-4
+          .panel.panel-default
+            .panel-heading
+              h3=food.name
+            .panel-body
+              img(src="/static/img/" + food.picture + ".jpg")
+            .panel-footer
+              a.btn.btn-default(href="/foods/" + food.id) See Why
+    h1.text-center Reviews
+    hr
+    .row
+      each review in viewmodel.reviews
+        .col-md-12
+          .panel.panel-default
+            .panel-heading #{review.title} - #{review.date}
+            .panel-body
+              p #{review.stars} / 5 stars - Posted By #{review.user.name}
+              .well=review.body
+    
   script.
     function select (element) {
       document.getElementById("panel_acid").style.display = 'none';
