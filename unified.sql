@@ -10,7 +10,7 @@ insert into foods (name, fatty, sweet, dense, starchy, salty, acid, delicate, st
 ('Almonds', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
 ('Peanuts', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Tacos and Wine? Why not.'),
 ('Cheese', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Nachos and wine? Why not?'),
-('Bread', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'Wine at breakfast? Questionable. Breakfast for dinner with wine? A+ choice'),
+('Bread', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE','TRUE','FALSE', 'Wine at breakfast? Questionable. Breakfast for dinner with wine? A+ choice'),
 ('Crackers', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'TRUE', 'FALSE', NULL);
 
 insert into grape 
