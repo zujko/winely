@@ -1,47 +1,39 @@
 extends ../layout.pug
 
 block content
-  .container
-    h2.text-center Suggested Producers
-    hr
+  
+  div.hero-head.hero-head-primary
+    h2.text-center Top Producers
+  .container-fluid.highlight-primary
     .row
       each producer, index in viewmodel.selected_producers
-        .col-md-2.hidden-sm.hidden-xs
-          .panel.panel-default
-            .panel-heading=producer.name
-            .panel-body.text-center
-              img(src="/static/images/" + producer.picture + ".jpg")
-            .panel-footer.text-center
-              a.btn.btn-default(href="/producers/details/" + producer.id) See More
-        if index < 4
-          .col-xs-3.col-sm-3.hidden-md.hidden-lg
+        .col-xs-6.col-sm-3
+          a(href="/producers/details/" + producer.id)
             .panel.panel-default
-              .panel-heading=producer.name
-              .panel-body.text-center
-                img(src="/static/images/" + producer.picture + ".jpg")
-                p=producer.climate
-              .panel-footer.text-center
-                a.btn.btn-default(href="/producers/details/" + producer.id) See More
+              .panel-body
+                .text-center
+                  div(style="background-image:url(\"/images/" + producer.picture + ".jpg\");height: 100px;")
+                    br
+                  .tile-text
+                    span=producer.name
+  div.hero-head.hero-head-secondary
+    h2.text-center Browse Producers
+  .container
     .row
-      .col-md-2
-        h4 Filters
-      .col-md-10
-        h3.text-center Browse producers
-        hr
-        .row
-          each producer in viewmodel.result_producers
-            .col-xs-3
-              .panel.panel-default
-                .panel-heading=producer.name
-                .panel-body.text-center
-                  img(src="/static/images/" + producer.picture + ".jpg")
-                  p=producer.climate
-                .panel-footer.text-center
-                  a.btn.btn-default(href="/producers/details/" + producer.id) See More
-        hr
-        .text-center
-          ul.pagination
-            - var n = 1;
-              while n <= viewmodel.count_pages
-                li
-                  a(href="/producers/" + n)=n++
+      each producer in viewmodel.result_producers
+        .col-xs-6.col-sm-3
+          a(href="/producers/details/" + producer.id)
+            .panel.panel-default
+              .panel-body
+                .text-center
+                  div(style="background-image:url(\"/images/" + producer.picture + ".jpg\");height: 100px;")
+                    br
+                  .tile-text
+                    span=producer.name
+    hr
+    .text-center
+      ul.pagination
+        - var n = 1;
+          while n <= viewmodel.count_pages
+            li
+              a(href="/producers/" + n)=n++
