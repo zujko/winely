@@ -24,58 +24,30 @@ router.get('/:page', function(req, res, next) {
 });
 
 getProducerBrowse = function(page, callback) {
-  viewmodel = { //don't forget to implement paging for result foods
-    title: "Browse producers",
-    selected_producers: [ //6 suggested foods
-      {
-        id: "bc622c41-830c-49a7-ab63-4ef5f1e040e9",
-        picture: "660b3ae8-2e14-48ab-a3bf-12e94937363e",
-        name: "Samantha's Fortune"
-      }, 
-      {
-        id: "fc322db2-54ee-4155-9498-de99818a5b55",
-        picture: "c31c0ec4-ea96-4094-85a9-6342897528de",
-        name: "Annette's Opportunity"
-      },
-      {
-        id: "660b3ae8-2e14-48ab-a3bf-12e94937363e",
-        picture: "765e53ec-5879-49d0-ac25-4b497fc6e607",
-        name: "Pristina's Outlook"
-      },
-      {
-        id: "f8d724ee-82a1-438b-813f-63493040995d",
-        picture: "765e53ec-5879-49d0-ac25-4b497fc6e607",
-        name: "Natalie's Fanatacism"
-      },
-      {
-        id: "d85ce9a7-e9ce-49ee-91aa-36e35e760558",
-        picture: "765e53ec-5879-49d0-ac25-4b497fc6e607",
-        name: "Opportunity's Honesty"
-      },
-      {
-        id: "739d136e-9aa3-4704-8164-3d7e7f72eb28",
-        picture: "d85ce9a7-e9ce-49ee-91aa-36e35e760558",
-        name: "Hope's Place"
+  pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      callback({});
+    }
+
+    var selectedProducers = [];
+    var query = client.query('SELECT id, name FROM vineyard LIMIT 20');
+    query.on('row', (row) => {
+      selectedProducers.push(JSON.parse(JSON.stringify(row)));
+    });
+    query.on('end', () => {
+      done();
+      viewmodel = {
+        title: "Browse producers",
+        selected_producers: selectedProducers.slice(1,6),
+        result_producers: selectedProducers,
+        current_page:page
+        //count_pages
       }
-    ],
-    result_producers: [
-      {
-        id: "739d136e-9aa3-4704-8164-3d7e7f72eb28",
-        picture: "d85ce9a7-e9ce-49ee-91aa-36e35e760558",
-        name: "Hope's Place"
-      }
-    ],
-    current_page: 1,
-    count_pages: 10 //number of pages of 20 wines we can show
-  }
-  for(x =0; x < 19; x++){ //for conciseness
-    viewmodel.result_producers.push({
-        id: "739d136e-9aa3-4704-8164-3d7e7f72eb28",
-        picture: "d85ce9a7-e9ce-49ee-91aa-36e35e760558",
-        name: "Hope's Place"
-      })
-  }
-  callback(viewmodel)
+      callback(viewmodel);
+    });
+  });
 }
 
 /**
