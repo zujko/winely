@@ -18,7 +18,7 @@ router.get('/details/:id', function(req, res, next) {
 });
 
 router.get('/:page', function(req, res, next) {
-  getproducerBrowse(req.params.page, function(producer_browse_vm){
+  getProducerBrowse(req.params.page, function(producer_browse_vm){
     res.render('producers/index', {viewmodel: producer_browse_vm})
   })
 });
@@ -32,20 +32,28 @@ getProducerBrowse = function(page, callback) {
     }
 
     var selectedProducers = [];
+    var count = 0;
     var query = client.query('SELECT id, name FROM vineyard LIMIT 20');
     query.on('row', (row) => {
       selectedProducers.push(JSON.parse(JSON.stringify(row)));
     });
     query.on('end', () => {
-      done();
-      viewmodel = {
-        title: "Browse producers",
-        selected_producers: selectedProducers.slice(1,6),
-        result_producers: selectedProducers,
-        current_page:page
-        //count_pages
-      }
-      callback(viewmodel);
+      query = client.query('SELECT count(*) FROM vineyard');
+      query.on('row', (row) => {
+        count = Number(JSON.parse(JSON.stringify(row)).count)
+      });
+      query.on('end', () => {
+        done();
+        console.log(Math.ceil(count/20));
+        viewmodel = {
+          title: "Browse producers",
+          selected_producers: selectedProducers.slice(1,6),
+          result_producers: selectedProducers,
+          current_page:page,
+          count_pages: Math.ceil(count/20)
+        }
+        callback(viewmodel);
+      });
     });
   });
 }

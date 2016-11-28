@@ -32,24 +32,29 @@ getWineBrowse = function(page, callback) {
       callback({})
     }
     var selected_wines = [];
-
-    var query = client.query('SELECT id, name, color, price FROM wine LIMIT 20',[]);
+    var count = 0;
+    var query = client.query('SELECT id, name, color, price FROM wine LIMIT 20 OFFSET $1',[20*page]);
     query.on('row', (row) => {
       selected_wines.push(JSON.parse(JSON.stringify(row)));
     });
     query.on('end', () => {
-      done();
-      viewmodel = {
-        title: "Browse Wines",
-        selected_wines: selected_wines.slice(1,5),
-        result_wines: selected_wines,
-        current_page: page
-      } 
-      console.log(JSON.stringify(viewmodel));
-      callback(viewmodel);
+      query = client.query('SELECT count(*) FROM wine');
+      query.on('row', (row) => {
+        count = Number(JSON.parse(JSON.stringify(row)).count);
+      });
+      query.on('end', () => {
+        done();
+        viewmodel = {
+          title: "Browse Wines",
+          selected_wines: selected_wines.slice(1,5),
+          result_wines: selected_wines,
+          current_page: page,
+          count_pages: Math.ceil(count/20)
+        } 
+        callback(viewmodel);
+      });
     });
   });  
-//  callback(viewmodel)
 }
 
 /**

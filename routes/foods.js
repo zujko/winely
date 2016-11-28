@@ -26,22 +26,29 @@ router.get('/:page', function(req, res, next) {
 
 getFoodBrowse = function(page, callback) {
   var foods = [];
+  var count = 0;
   pg.connect(connectionString, (err, client, done) => {
-    var query = client.query('SELECT * FROM foods LIMIT 20 OFFSET $1',[20*page || 0]);
+    var query = client.query('SELECT * FROM foods LIMIT 20 OFFSET $1',[20*page]);
     
     query.on('row', (row) => {
       foods.push(JSON.parse(JSON.stringify(row)));
     });
     query.on('end', () => {
-      done();
-      viewmodel = {
-        title: "Browse Foods",
-        selected_foods: foods.slice(1,5),
-        result_foods: foods,
-        current_page: page
-        //coount_page: number of pages of 20
-      }
-      callback(viewmodel);
+      query = client.query('SELECT count(*) FROM foods');
+      query.on('row', (row) => {
+        count = Number(JSON.parse(JSON.stringify(row)).count); 
+      });
+      query.on('end', () => {
+        done();
+        viewmodel = {
+          title: "Browse Foods",
+          selected_foods: foods.slice(1,5),
+          result_foods: foods,
+          current_page: page,
+          count_pages: Math.ceil(count/20)
+        }
+        callback(viewmodel);
+      });
     });
   }); 
 }
