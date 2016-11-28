@@ -47,7 +47,7 @@ CREATE TABLE grape (
   image_thumb uuid,
   berry_skin_color text,
   also_known_as text,
-  idea_soil text,
+  ideal_soil text,
   general text,
   cool text,
   mid text,
@@ -71,6 +71,8 @@ CREATE TABLE foods (
   starchy boolean NOT NULL,
   delicate boolean NOT NULL,
   strong boolean NOT NULL,
+  salty boolean,
+  acid boolean,
   description text
 );
 
