@@ -1,20 +1,20 @@
-insert into foods (name, fatty, sweet, dense, starchy, delicate, strong, description) VALUES
-('Buffalo Wings', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for sporting-related wine events.'),
-('Chocolate Cake', 'TRUE', 'TRUE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'Ideal for any wine event.'),
-('Brownies', 'TRUE', 'TRUE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'Ideal for any wine event.'),
-('Tacos', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Tacos and Wine? Why not.'),
-('Nachos', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Nachos and wine? Why not?'),
-('Sausage Breakfast Sandwich', 'TRUE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'TRUE', 'Wine at breakfast? Questionable. Breakfast for dinner with wine? A+ choice'),
-('Dorritos', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Ideal for sporting-related wine events.'),
-('Salad', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'Ideal for any wine event.'),
-('Almonds', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'Ideal for any wine event.'),
-('Peanuts', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'Tacos and Wine? Why not.'),
-('Cheese', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'Nachos and wine? Why not?'),
+insert into foods (name, fatty, sweet, dense, starchy, salty, acid, delicate, strong, description) VALUES
+('Buffalo Wings', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Ideal for sporting-related wine events.'),
+('Chocolate Cake', 'TRUE', 'TRUE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
+('Brownies', 'TRUE', 'TRUE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
+('Tacos', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Tacos and Wine? Why not.'),
+('Nachos', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Nachos and wine? Why not?'),
+('Sausage Breakfast Sandwich', 'TRUE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Wine at breakfast? Questionable. Breakfast for dinner with wine? A+ choice'),
+('Dorritos', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Ideal for sporting-related wine events.'),
+('Salad', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
+('Almonds', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
+('Peanuts', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Tacos and Wine? Why not.'),
+('Cheese', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Nachos and wine? Why not?'),
 ('Bread', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'Wine at breakfast? Questionable. Breakfast for dinner with wine? A+ choice'),
-('Crackers', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', NULL);
+('Crackers', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'TRUE', 'FALSE', NULL);
 
 insert into grape 
-(id,name,description,berry_skin_color,also_known_as,idea_soil,general,cool,mid,hot)
+(id,name,description,berry_skin_color,also_known_as,ideal_soil,general,cool,mid,hot)
 VALUES
 ('6987bdcd-e27b-447d-8797-690dd091fd60', 'Sauvignon Blanc', 'Suvignon blanc is a green-skinned grape originally from the Bordeaux region in France. ', 'Blanc', 'Fume Blanc', 'Varied', 'Sauvignon Blanc can range from aggressively green and grassy to sweet and tropical, depending on climate. Sauvignon blanc performs best in cooler climates. ', 'pronounced green flavor', NULL, 'over-ripe, dull flavors, flat acidity'),
 ('5fe6c2c0-65a1-4685-b47f-249243f2d7b5', 'Riesling', 'Riesling is a white grape variety originally from the Rhine region of Germany. Riesling grapes display flowery, perfume-like aromas in addition to high acidity. ', 'Blanc', 'Rheinriesling, Johannisberger', 'slate and sandy clay', NULL, 'Apple and tree fruit combined with noticeable acidity, often but not always balanced by residual sugar', 'High acidity', 'Lime flavors in addition to green apple and high acidity'),
