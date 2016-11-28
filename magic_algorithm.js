@@ -1,8 +1,8 @@
 /**
  * Function takes a wine object and constructs a pgsql query to find a recommended food
  */
-var recommend_food = function(wine, callback) {
-  query = "select * from foods where "
+var recommend_food = function(wine) {
+  var query = "select name,picture,id from foods where "
   if (wine.tannin > .3){
     query+= " salty = FALSE and "
   }
@@ -13,18 +13,14 @@ var recommend_food = function(wine, callback) {
     query+= " dense = TRUE and "
   }
   query+= " TRUE = TRUE" // simplification for terminating ands
-  if (wine.acid > .3){
-    query+= "order by acid desc "
-  }
-  query+= ";"
-  callback(query)
+  return query;
 }
 
 /**
  * Function takes a food object and constructs a pgsql query to find a recommended wine
  */
-var recommend_wine = function(food, callback) {
-  query = "select * from wine where "
+var recommend_wine = function(food) {
+  var query = "select * from wine where "
   if (!food.dense){
     query+= " body < .5 and "
   }
@@ -40,6 +36,7 @@ var recommend_wine = function(food, callback) {
   if (food.acid || food.fatty){
     query += " order by acid, tannin desc "
   }
-  query += ";"
-  callback(query)
+  return query;
 }
+module.exports.recommend_food = recommend_food;
+module.exports.recommend_wine = recommend_wine;

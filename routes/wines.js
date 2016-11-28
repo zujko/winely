@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var magicAlgo = require('../magic_algorithm');
 const pg = require('pg');
 const connectionString = 'postgres://localhost:5432/winely';
 
@@ -31,12 +32,21 @@ getWineBrowse = function(page, callback) {
       callback({})
     }
     var selected_wines = [];
-    var query = client.query('SELECT id, name, color, price FROM wine LIMIT 20 OFFSET $1',[20*page]);
+
+    var query = client.query('SELECT id, name, color, price FROM wine LIMIT 20',[]);
     query.on('row', (row) => {
       selected_wines.push(JSON.parse(JSON.stringify(row)));
     });
     query.on('end', () => {
       done();
+      viewmodel = {
+        title: "Browse Wines",
+        selected_wines: selected_wines.slice(1,5),
+        result_wines: selected_wines,
+        current_page: page
+      } 
+      console.log(JSON.stringify(viewmodel));
+      callback(viewmodel);
     });
   });  
     viewmodel = { //don't forget to implement paging for result wines
@@ -106,7 +116,7 @@ getWineBrowse = function(page, callback) {
         price: "$10"
       })
   }
-  callback(viewmodel)
+//  callback(viewmodel)
 }
 
 /**
@@ -146,7 +156,8 @@ getWine = function(wine_id, callback) {
          });
          query.on('end', () => {
            //CALCULATE FOODS
-           query = client.query('SELECT name,picture,id FROM foods LIMIT 3');
+           console.log(magicAlgo.recommend_food(wineResult));
+           query = client.query(magicAlgo.recommend_food(wineResult));
            query.on('row', (row) => {
             foodResult.push(JSON.parse(JSON.stringify(row)));
            });
