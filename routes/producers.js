@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
+const pg = require('pg');
+const connectionString = 'postgres://localhost:5432/winely';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -82,47 +83,49 @@ getProducerBrowse = function(page, callback) {
  * replace this with code that calls the database to make this work
  */
 getproducer = function(producer_id, callback) {
-  viewmodel = {
-    id: "fc322db2-54ee-4155-9498-de99818a5b55",
-    picture: "765e53ec-5879-49d0-ac25-4b497fc6e607",
-    picture_cover: "a331b287-515b-44e6-9b39-32ef739301df",
-    name: "Brotherhood Bomba Vineyard", //title
-    lat: 55.5234,
-    lng: -24.23423,
-    description: "Nestled at the base of Mount Hood, this producer is famous for its Pinot Noir....",
-    wines: [ //all wines
-      {
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Hillary's Triumph",
-        color: "Honey",
-        price: "$9"
-      },
-      {
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Louisa's Redemption",
-        color: "Red",
-        price: "$13"
-      },
-      {
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Melissa's Penitence",
-        color: "Red",
-        price: "$15"
-      }
-    ],
-    region: {
-          id: "fc322db2-54ee-4155-9498-de99818a5b55",
-          picture: "765e53ec-5879-49d0-ac25-4b497fc6e607",
-          picture_cover: "a331b287-515b-44e6-9b39-32ef739301df",
-          name: "Mt. Hood Foothills AVA", //title
-          climate: "Continental",
-          description: "Nestled at the base of Mount Hood, this producer is famous for its Pinot Noir....",
-    }
-    }
-  callback(viewmodel)
+  var wineResults = [];
+  var vineyard = {};
+  var region = {};
+  pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      callback({});
+    } 
+    var query = client.query('SELECT * FROM vineyard WHERE id = $1', [producer_id]);
+    query.on('row', (row) => {
+      vineyard = JSON.parse(JSON.stringify(row));
+      console.log(JSON.stringify(vineyard, null, 4));
+    });
+
+    query.on('end', () => {
+      query = client.query('SELECT id, name, color, price FROM wine WHERE vineyard_id = $1', [producer_id]);
+      query.on('row', (row) => {
+        wineResults.push(JSON.parse(JSON.stringify(row)));
+      });
+      query.on('end', () => {
+        query = client.query('SELECT * FROM region WHERE id=$1',[vineyard.region_id]);
+        query.on('row', (row) => {
+          region = JSON.parse(JSON.stringify(row));
+        });
+        query.on('end', () => {
+          done();
+          viewmodel = {
+            id: vineyard.id,
+            picture: vineyard.id,
+            picture_cover: vineyard.id,
+            name: vineyard.name,
+            lat: vineyard.location.x,
+            lng: vineyard.location.y,
+            description: vineyard.description,
+            wines: wineResults,
+            region: region
+          }
+          callback(viewmodel);
+        });
+      });
+    });
+  });
 }
 
 module.exports = router;
