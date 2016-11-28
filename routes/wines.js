@@ -25,6 +25,11 @@ router.get('/:page', function(req, res, next) {
 
 getWineBrowse = function(page, callback) {
   pg.connect(connectionString,(err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      callback({})
+    }
     var selected_wines = [];
     var query = client.query('SELECT id, name, color, price FROM wine LIMIT 20 OFFSET $1',[20*page]);
     query.on('row', (row) => {
@@ -114,6 +119,8 @@ getWine = function(wine_id, callback) {
     var vineyardResult = {};
     var vintageResult = {};
     var regionResult = {};
+    var foodResult = [];
+    var grapeCompResult = [];
     if(err) {
       console.log('Connection Error');
       done();
@@ -138,74 +145,68 @@ getWine = function(wine_id, callback) {
           regionResult = JSON.parse(JSON.stringify(row));
          });
          query.on('end', () => {
-          done();
-          console.log(JSON.stringify(wineResult) + '\n' + JSON.stringify(vineyardResult) + '\n' + JSON.stringify(vintageResult) + '\n' + JSON.stringify(regionResult));
+           //CALCULATE FOODS
+           query = client.query('SELECT name,picture,id FROM foods LIMIT 3');
+           query.on('row', (row) => {
+            foodResult.push(JSON.parse(JSON.stringify(row)));
+           });
+           query.on('end', () => {
+             //CALCULATE GRAPE COMPONENT
+            query = client.query('SELECT name, berry_skin_color, percent, gc.id FROM grape_component gc INNER JOIN grape g ON gc.grape_id = g.id WHERE gc.wine_id = $1',[wine_id]);
+             query.on('row', (row) => {
+              grapeCompResult.push(JSON.parse(JSON.stringify(row)));
+             });
+             query.on('end', (row) => {
+              wineVmCallback(wineResult, vineyardResult, vintageResult, regionResult, foodResult, grapeCompResult, callback, done, client);
+             });
+           });
          }); 
         });
       });
     });
   });
-  viewmodel = {
-    title: "Purple Tail", //from db.wine
-    percentAlcohol: .145,
-    sugar: .5,
-    acid: .8,
-    brix: .7,
-    body: .1,
-    price: "$14",
-    color: "red",
-    tannin: .2,
-    fruity: true,
-    spicy: true,
-    tart: false,
-    summary: "Purple Tail is Washington's premier easy-drinking wine.",
-    vintage: {
-      year: 2014, //wine
-      comment: "2014 was an unusually rainy year for Washington's typically warm and dry vineyards...", //db.vintage
-      region: { //pulled from vineyard
-        name: "Willammette Valley",
-        id: "c58f6806-b130-4915-a37e-2045b8cee7fa"
-      }
-    },
-    vineyard: { //db.vineyard
-      id: "32a030d9-3ba6-4b39-b907-44f9cac997dd",
-      name: "PNW WineTime",
-      lat: "46.133196", //extracted from point
-      lng: "-121.385009",
-      description: "PNW WineTime is Washington state's premier producer of easy-drinking wine for all occasions.",
-      picture_cover: "88df6a51-5c59-45b8-a71b-1f2439ebe637",
-      picture_thumb: "c53529fe-08bf-4b57-bab5-3e19e58742b3"
-    },
-    foods: [ //computed by querying foods and applying rules based on wine's attributes
-      {
-        name: "Buffalo Wings",
-        picture: "e62b675c-4b58-4697-ae4b-a244eacf026d",
-        id: "880e5194-e504-4df9-aac3-5653d1698493"
+}
+wineVmCallback = function(wine, vineyard, vintage, region,food, grapeComp, callback, done, client) {
+  var foodResult = [];
+  var query = client.query('SELECT name, id FROM foods LIMIT 3');
+  query.on('row', (row) => {
+    foodResult.push(JSON.parse(JSON.stringify(row)));
+  });
+  query.on('end', () => {
+    done();
+    viewmodel = {
+      title: wine.name, //from db.wine
+      percentAlcohol: wine.alcohol,
+      sugar: wine.sugar,
+      acid: wine.acid,
+      brix: wine.brix,
+      body: wine.body,
+      price: wine.price,
+      color: wine.color,
+      tannin: wine.tannin,
+      fruity: wine.fruity,
+      spicy: wine.spicy,
+      tart: wine.tart,
+      summary: wine.label_description,
+      vintage: {
+        year: vintage.year, //wine
+        comment: vintage.comment_, //db.vintage
+        region: { //pulled from vineyard
+          name: region.name,
+          id: region.id
+        }
       },
-      {
-        name: "Ranch Quesadilla",
-        picture: "966a71b7-27c4-494b-811b-6cbf29531982",
-        id: "0634d163-01bc-4775-815d-5444113426f2"
+      vineyard: { //db.vineyard
+        id: vineyard.id,
+        name: vineyard.name,
+        lat: vineyard.location.x, //extracted from point
+        lng: vineyard.location.y,
+        description: vineyard.description,
+        picture_cover: "88df6a51-5c59-45b8-a71b-1f2439ebe637",
+        picture_thumb: "c53529fe-08bf-4b57-bab5-3e19e58742b3"
       },
-      {
-        name: "Spam!",
-        picture: "b7deae52-5f1e-4773-b4d3-dca7d4680c9a",
-        id: "298bb6e2-cbde-4174-aa31-ab4345c45393"
-      }
-    ], 
-    grape_blend: [{ //db.grape_component
-        name: "Gewurztaminer",
-        color: "red",
-        id: "01cfcecb-e3c1-475f-a0f1-659c3c3dea87",
-        percent: .8
-      },
-      {
-        name: "Merlot",
-        color: "Red",
-        id: "c58f6806-b130-4915-a37e-2045b8cee7fa",
-        percent: .2
-      }
-    ],
+      foods: foodResult, 
+    grape_blend: grapeComp,
     reviews: [{
       title: "Great Wine!",
       date: "01-01-2015",
@@ -222,8 +223,8 @@ getWine = function(wine_id, callback) {
     }],
     rating: 4.5 //computed from reviews above
   }
-
   callback(viewmodel)
+  });
 }
 
 module.exports = router;
