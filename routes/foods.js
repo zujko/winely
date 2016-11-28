@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var magicAlgo = require('../magic_algorithm');
 const pg = require('pg');
 const connectionString = 'postgres://localhost:5432/winely';
 
@@ -94,62 +95,41 @@ getFoodBrowse = function(page, callback) {
  * getWine - gets a full viewmodel for a particular wine.
  * replace this with code that calls the database to make this work
  */
-getFood = function(wine_id, callback) {
+getFood = function(food_id, callback) {
   pg.connect(connectionString, (err, client, done) => {
     var foodResult = {};
-
-    var query = client.query('SELECT * FROM foods WHERE id=$1',[wine_id]);
+    var wineRec = [];
+    var query = client.query('SELECT * FROM foods WHERE id=$1',[food_id]);
     query.on('row', (row) => {
       foodResult = JSON.parse(JSON.stringify(row));
     });
+    query.on('end', () => {
+      console.log(magicAlgo.recommend_wine(foodResult));
+      query = client.query(magicAlgo.recommend_wine(foodResult));
+      query.on('row', (row) => {
+        wineRec.push(JSON.parse(JSON.stringify(row)));
+      });
+      query.on('end', () => {
+        done();
+        viewmodel = {
+          id: foodResult.id,
+          picture: foodResult.picture,
+          name: foodResult.name,
+          fatty: foodResult.fatty,
+          sweet: foodResult.sweet,
+          dense: foodResult.dense,
+          starchy: foodResult.starchy,
+          delicate: foodResult.delicate,
+          strong: foodResult.strong,
+          description: foodResult.description,
+          suggested_wines: wineRec
+
+        } 
+        console.log(JSON.stringify(viewmodel));
+        callback(viewmodel);
+      });
+    });
   });
-  viewmodel = {
-    id: "7d72c613-e403-428f-a63e-7fbde05f98fe",
-    picture: "90173cfd-2f4d-4d7d-80fb-d7798f140606",
-    name: "Amber's Buffalo Promise",
-    fatty: true,
-    sweet: true,
-    dense: true,
-    starchy: true,
-    delicate: true,
-    strong: false,
-    description: "Amber's Buffalo Promise is a unique and delicious food or something...",
-    suggested_wines: [ //magically produced by an algorithm
-      {
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Hillary's Triumph",
-        color: "Honey",
-        price: "$9",
-        reason: "Hillary's Triumph pairs well with fatty, sweet foods." //why we suggested it
-      },
-      {
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Louisa's Redemption",
-        color: "Red",
-        price: "$13",
-        reason: "Louisa's Redemption pairs well with delicate, starchy foods."
-      },
-      {
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Melissa's Penitence",
-        color: "Red",
-        price: "$15",
-        reason: "Melissa's Penitence pairs well with delicate, starchy foods."
-      },
-      {
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Patricia's Revelation",
-        color: "White",
-        price: "$10",
-        reason: "Patricia's Revelation pairs well with delicate, starchy foods."
-      }
-    ]
-    }
-  callback(viewmodel)
 }
 
 module.exports = router;
