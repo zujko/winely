@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
+const pg = require('pg');
+const connectionString = 'postgres://localhost:5432/winely';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -23,7 +24,17 @@ router.get('/:page', function(req, res, next) {
 });
 
 getWineBrowse = function(page, callback) {
-  viewmodel = { //don't forget to implement paging for result wines
+  pg.connect(connectionString,(err, client, done) => {
+    var selected_wines = [];
+    var query = client.query('SELECT id, name, color, price FROM wine LIMIT 20 OFFSET $1',[20*page]);
+    query.on('row', (row) => {
+      selected_wines.push(JSON.parse(JSON.stringify(row)));
+    });
+    query.on('end', () => {
+      done();
+    });
+  });  
+    viewmodel = { //don't forget to implement paging for result wines
     title: "Browse Wines",
     selected_wines: [ //6 suggested wines
       {
@@ -98,6 +109,42 @@ getWineBrowse = function(page, callback) {
  * replace this with code that calls the database to make this work
  */
 getWine = function(wine_id, callback) {
+  pg.connect(connectionString, (err, client, done) => {
+    var wineResult = {};
+    var vineyardResult = {};
+    var vintageResult = {};
+    var regionResult = {};
+    if(err) {
+      console.log('Connection Error');
+      done();
+    }
+    var query = client.query('SELECT * FROM wine WHERE id=$1',[wine_id]);
+    query.on('row', (row) => {
+      wineResult = JSON.parse(JSON.stringify(row));
+    });
+    query.on('end',() => {
+      query = client.query('SELECT * FROM vineyard WHERE id=$1',[wineResult.vineyard_id]); 
+      query.on('row', (row) => {
+        vineyardResult = JSON.parse(JSON.stringify(row));
+      });
+      query.on('end', () => {
+        query = client.query('SELECT * FROM vintage_attrs WHERE year=$1 AND region_id=$2',[wineResult.vintage,vineyardResult.region_id])
+        query.on('row', (row) => {
+          vintageResult = JSON.parse(JSON.stringify(row));
+        });
+        query.on('end', () => {
+          query = client.query('SELECT * FROM region WHERE id=$1',[vineyardResult.region_id]);
+         query.on('row', (row) => {
+          regionResult = JSON.parse(JSON.stringify(row));
+         });
+         query.on('end', () => {
+          done();
+          console.log(JSON.stringify(wineResult) + '\n' + JSON.stringify(vineyardResult) + '\n' + JSON.stringify(vintageResult) + '\n' + JSON.stringify(regionResult));
+         }); 
+        });
+      });
+    });
+  });
   viewmodel = {
     title: "Purple Tail", //from db.wine
     percentAlcohol: .145,

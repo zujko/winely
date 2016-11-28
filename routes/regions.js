@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
+const pg = require('pg');
+const connectionString = 'postgres://localhost:5432/winely';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -94,6 +95,24 @@ getRegionBrowse = function(page, callback) {
  * replace this with code that calls the database to make this work
  */
 getRegion = function(region_id, callback) {
+  pg.connect(connectionString, (err, client, done) => {
+    var regionResult = {};
+    var vintages = [];
+    var query = client.query('SELECT * from region WHERE id=$1', [region_id]);
+    query.on('row', (row) => {
+      regionResult = JSON.parse(JSON.stringify(row));
+    });
+
+    query.on('end', () => {
+      query = client.query('SELECT year, comment_ FROM vintage_attrs WHERE region_id=$1', [region_id]);
+      query.on('row', (row) => {
+        vintages.push(JSON.parse(JSON.stringify(row)));
+      });  
+      query.on('end', () => {
+        // DONE
+      });
+    });
+  });
   viewmodel = {
     id: "fc322db2-54ee-4155-9498-de99818a5b55",
     picture: "765e53ec-5879-49d0-ac25-4b497fc6e607",

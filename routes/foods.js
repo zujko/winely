@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
+const pg = require('pg');
+const connectionString = 'postgres://localhost:5432/winely';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -94,6 +95,14 @@ getFoodBrowse = function(page, callback) {
  * replace this with code that calls the database to make this work
  */
 getFood = function(wine_id, callback) {
+  pg.connect(connectionString, (err, client, done) => {
+    var foodResult = {};
+
+    var query = client.query('SELECT * FROM foods WHERE id=$1',[wine_id]);
+    query.on('row', (row) => {
+      foodResult = JSON.parse(JSON.stringify(row));
+    });
+  });
   viewmodel = {
     id: "7d72c613-e403-428f-a63e-7fbde05f98fe",
     picture: "90173cfd-2f4d-4d7d-80fb-d7798f140606",
