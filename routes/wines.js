@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var magicAlgo = require('../magic_algorithm');
 const pg = require('pg');
 const connectionString = 'postgres://localhost:5432/winely';
 
@@ -25,83 +26,35 @@ router.get('/:page', function(req, res, next) {
 
 getWineBrowse = function(page, callback) {
   pg.connect(connectionString,(err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      callback({})
+    }
     var selected_wines = [];
+    var count = 0;
     var query = client.query('SELECT id, name, color, price FROM wine LIMIT 20 OFFSET $1',[20*page]);
     query.on('row', (row) => {
       selected_wines.push(JSON.parse(JSON.stringify(row)));
     });
     query.on('end', () => {
-      done();
+      query = client.query('SELECT count(*) FROM wine');
+      query.on('row', (row) => {
+        count = Number(JSON.parse(JSON.stringify(row)).count);
+      });
+      query.on('end', () => {
+        done();
+        viewmodel = {
+          title: "Browse Wines",
+          selected_wines: selected_wines.slice(1,5),
+          result_wines: selected_wines,
+          current_page: page,
+          count_pages: Math.ceil(count/20)
+        } 
+        callback(viewmodel);
+      });
     });
   });  
-    viewmodel = { //don't forget to implement paging for result wines
-    title: "Browse Wines",
-    selected_wines: [ //6 suggested wines
-      {
-        id: "5ee725b1-b289-4ebf-8639-424cd1598282",
-        picture: "d34d2033-c49c-4365-b017-699d9b79ca8b",
-        name: "Orange Cat",
-        color: "Red",
-        price: "$19"
-      }, 
-      {
-        id: "86738468-5419-4849-9c56-a859dcb0a0e4",
-        picture: "50325f93-df9c-4ef0-9dcd-e8be6fd6c17f",
-        name: "Seditious Sailor",
-        color: "White",
-        price: "$16"
-      },
-      {
-        id: "d4c2b80c-e876-4396-ab84-33a040fe76db",
-        picture: "0e128066-dd63-4e41-806e-747058970336",
-        name: "Poppy Pumice",
-        color: "Rosé",
-        price: "$8"
-      },
-      {
-        id: "ddc28e22-e4ac-4769-bd09-96a1497bfc31",
-        picture: "bd777f25-a1ab-4f60-bdf8-37a26e4bf835",
-        name: "Sandy's Surprise",
-        color: "Red",
-        price: "$10"
-      },
-      {
-        id: "5a7f9786-6b9c-44e8-a82b-21b181fe37a0",
-        picture: "41a575db-8fd8-42a5-a18a-674e7f64a675",
-        name: "Hero's Pen",
-        color: "Red",
-        price: "$14"
-      },
-      {
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Amber's Promise",
-        color: "Honey",
-        price: "$10"
-      }
-    ],
-    result_wines: [
-      {
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Amber's Promise",
-        color: "Honey",
-        price: "$10"
-      }
-    ],
-    current_page: 1,
-    count_pages: 10 //number of pages of 20 wines we can show
-  }
-  for(x =0; x < 19; x++){ //for conciseness
-    viewmodel.result_wines.push({
-        id: "50414f98-2229-49da-8235-2330b04f6949",
-        picture: "eac64461-ae52-4712-b667-78699f3a0d6d",
-        name: "Amber's Promise",
-        color: "Honey",
-        price: "$10"
-      })
-  }
-  callback(viewmodel)
 }
 
 /**
@@ -114,6 +67,8 @@ getWine = function(wine_id, callback) {
     var vineyardResult = {};
     var vintageResult = {};
     var regionResult = {};
+    var foodResult = [];
+    var grapeCompResult = [];
     if(err) {
       console.log('Connection Error');
       done();
@@ -138,74 +93,68 @@ getWine = function(wine_id, callback) {
           regionResult = JSON.parse(JSON.stringify(row));
          });
          query.on('end', () => {
-          done();
-          console.log(JSON.stringify(wineResult) + '\n' + JSON.stringify(vineyardResult) + '\n' + JSON.stringify(vintageResult) + '\n' + JSON.stringify(regionResult));
+           //CALCULATE FOODS
+           query = client.query(magicAlgo.recommend_food(wineResult));
+           query.on('row', (row) => {
+            foodResult.push(JSON.parse(JSON.stringify(row)));
+           });
+           query.on('end', () => {
+             //CALCULATE GRAPE COMPONENT
+            query = client.query('SELECT name, berry_skin_color, percent, gc.id FROM grape_component gc INNER JOIN grape g ON gc.grape_id = g.id WHERE gc.wine_id = $1',[wine_id]);
+             query.on('row', (row) => {
+              grapeCompResult.push(JSON.parse(JSON.stringify(row)));
+             });
+             query.on('end', (row) => {
+              wineVmCallback(wineResult, vineyardResult, vintageResult, regionResult, foodResult, grapeCompResult, callback, done, client);
+             });
+           });
          }); 
         });
       });
     });
   });
-  viewmodel = {
-    title: "Purple Tail", //from db.wine
-    percentAlcohol: .145,
-    sugar: .5,
-    acid: .8,
-    brix: .7,
-    body: .1,
-    price: "$14",
-    color: "red",
-    tannin: .2,
-    fruity: true,
-    spicy: true,
-    tart: false,
-    summary: "Purple Tail is Washington's premier easy-drinking wine.",
-    vintage: {
-      year: 2014, //wine
-      comment: "2014 was an unusually rainy year for Washington's typically warm and dry vineyards...", //db.vintage
-      region: { //pulled from vineyard
-        name: "Willammette Valley",
-        id: "c58f6806-b130-4915-a37e-2045b8cee7fa"
-      }
-    },
-    vineyard: { //db.vineyard
-      id: "32a030d9-3ba6-4b39-b907-44f9cac997dd",
-      name: "PNW WineTime",
-      lat: "46.133196", //extracted from point
-      lng: "-121.385009",
-      description: "PNW WineTime is Washington state's premier producer of easy-drinking wine for all occasions.",
-      picture_cover: "88df6a51-5c59-45b8-a71b-1f2439ebe637",
-      picture_thumb: "c53529fe-08bf-4b57-bab5-3e19e58742b3"
-    },
-    foods: [ //computed by querying foods and applying rules based on wine's attributes
-      {
-        name: "Buffalo Wings",
-        picture: "e62b675c-4b58-4697-ae4b-a244eacf026d",
-        id: "880e5194-e504-4df9-aac3-5653d1698493"
+}
+wineVmCallback = function(wine, vineyard, vintage, region,food, grapeComp, callback, done, client) {
+  var foodResult = [];
+  var query = client.query('SELECT name, id FROM foods LIMIT 3');
+  query.on('row', (row) => {
+    foodResult.push(JSON.parse(JSON.stringify(row)));
+  });
+  query.on('end', () => {
+    done();
+    viewmodel = {
+      title: wine.name, //from db.wine
+      percentAlcohol: wine.alcohol,
+      sugar: wine.sugar,
+      acid: wine.acid,
+      brix: wine.brix,
+      body: wine.body,
+      price: wine.price,
+      color: wine.color,
+      tannin: wine.tannin,
+      fruity: wine.fruity,
+      spicy: wine.spicy,
+      tart: wine.tart,
+      summary: wine.label_description,
+      vintage: {
+        year: vintage.year, //wine
+        comment: vintage.comment_, //db.vintage
+        region: { //pulled from vineyard
+          name: region.name,
+          id: region.id
+        }
       },
-      {
-        name: "Ranch Quesadilla",
-        picture: "966a71b7-27c4-494b-811b-6cbf29531982",
-        id: "0634d163-01bc-4775-815d-5444113426f2"
+      vineyard: { //db.vineyard
+        id: vineyard.id,
+        name: vineyard.name,
+        lat: vineyard.location.x, //extracted from point
+        lng: vineyard.location.y,
+        description: vineyard.description,
+        picture_cover: "88df6a51-5c59-45b8-a71b-1f2439ebe637",
+        picture_thumb: "c53529fe-08bf-4b57-bab5-3e19e58742b3"
       },
-      {
-        name: "Spam!",
-        picture: "b7deae52-5f1e-4773-b4d3-dca7d4680c9a",
-        id: "298bb6e2-cbde-4174-aa31-ab4345c45393"
-      }
-    ], 
-    grape_blend: [{ //db.grape_component
-        name: "Gewurztaminer",
-        color: "red",
-        id: "01cfcecb-e3c1-475f-a0f1-659c3c3dea87",
-        percent: .8
-      },
-      {
-        name: "Merlot",
-        color: "Red",
-        id: "c58f6806-b130-4915-a37e-2045b8cee7fa",
-        percent: .2
-      }
-    ],
+      foods: foodResult, 
+    grape_blend: grapeComp,
     reviews: [{
       title: "Great Wine!",
       date: "01-01-2015",
@@ -222,8 +171,8 @@ getWine = function(wine_id, callback) {
     }],
     rating: 4.5 //computed from reviews above
   }
-
   callback(viewmodel)
+  });
 }
 
 module.exports = router;
