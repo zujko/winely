@@ -1,46 +1,53 @@
 extends ../layout.pug
 
 block content
-  .row.row--hero.cover
-    .row__column
-      h1.--inverse=viewmodel.name
-      h2.--inverse=viewmodel.climate
+  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.picture + ".jpg');")
+    .vcenter
+      .col-xs-12.col-sm-6.col-sm-offset-3.text-center
+        h1.--inverse=viewmodel.name
   .container
     .row
       .col-md-12
         .panel.panel-default
-          .panel-heading.text-center Description
           .panel-body
-            p #{viewmodel.description}
-    h1.text-center Suggested Wines
-    hr
+            .text-content
+              p #{viewmodel.description}
+  div.hero-head.hero-head-primary
+    h2.text-center Suggested Wines
+  .container-fluid.highlight-primary
     .row
       each wine, index in viewmodel.suggested_wines
-        .col-sm-3
-          .panel.panel-default
-            .panel-heading=wine.name
-            .panel-body.text-center
-              img(src="/static/images/" + wine.picture + ".jpg")
-              p #{wine.color} - #{wine.price}
-            .panel-footer.text-center
-              a.btn.btn-default(href="/wines/details/" + wine.id) See More
-    h1.text-center Suggested Producers
-    hr
+        .col-xs-6.col-sm-3
+          a(href="/wines/details/" + wine.id)
+            .panel.panel-default
+              .panel-body
+                .text-center
+                  div(style="background-image:url(\"/images/" + wine.picture + ".jpg\");height: 100px;")
+                    br
+                  .tile-text
+                    span=wine.name
+  div.hero-head.hero-head-secondary
+    h2.text-center Suggested Producers
+  .container-fluid.highlight-secondary
     .row
       each producer, index in viewmodel.suggested_producers
-        .col-sm-3
-          .panel.panel-default
-            .panel-heading=producer.name
-            .panel-body.text-center
-              img(src="/static/images/" + producer.picture + ".jpg")
-            .panel-footer.text-center
-              a.btn.btn-default(href="/producers/details/" + producer.id) See More
-    h1.text-center Vintage History
-    hr
+        .col-xs-6.col-sm-3
+          a(href="/producers/details/" + producer.id)
+            .panel.panel-default
+              .panel-body
+                .text-center
+                  div(style="background-image:url(\"/images/" + producer.picture + ".jpg\");height: 100px;")
+                    br
+                  .tile-text
+                    span=producer.name
+  div.hero-head.hero-head-tertiary
+    h2.text-center Vintage History
+  .container-fluid.highlight-secondary
     .row
       each vintage, index in viewmodel.vintages
         .col-sm-4
           .panel.panel-default
             .panel-heading=vintage.year
             .panel-body.text-center
-              p #{vintage.description}
+              .text-content
+                p #{vintage.description}
