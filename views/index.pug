@@ -1,8 +1,41 @@
 extends layout.pug
 
 block content
-  .container-fluid.cover
-    .col-xs-12.col-sm-6.col-sm-offset-3.text-center
-      h1.--inverse WINE
-        br
-        span For the World
+  .container-fluid.cover(style="background-image: url('/images/cover.jpg');")
+    .vcenter
+      .col-xs-12.col-sm-6.col-sm-offset-3.text-center
+        h1.--inverse Winely
+  .container
+    .row
+      .col-md-6
+        .panel.panel-default
+          .panel-heading.text-center Explore the world of wine
+          .panel-body
+            .text-content
+              p Winely makes it easy to explore all that the wine world has to offer, without the wine snob intimidation.
+          .panel-footer.text-center
+            a.btn.btn-default(href="/wines/") See the Wines
+      .col-md-6
+        .panel.panel-default
+          .panel-heading.text-center Find the right wine for any meal
+          .panel-body
+            .text-content
+              p Winely's advanced algorithms make it easy to find the right pairing every time.
+          .panel-footer.text-center
+            a.btn.btn-default(href="/foods/") See the Foods
+
+  div.hero-head.hero-head-primary
+    h2.text-center Top wines
+  .container-fluid.highlight-primary
+    .row
+      each wine, index in viewmodel.selected_wines
+        .col-xs-6.col-sm-3
+          a(href="/wines/details/" + wine.id)
+            .panel.panel-default
+              .panel-body
+                .text-center
+                  div(style="background-image:url(\"/images/" + wine.picture + ".jpg\");height: 100px;")
+                    br
+                  .tile-text
+                    span=wine.name
+                  p #{wine.color} - #{wine.price}

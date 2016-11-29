@@ -1,75 +1,84 @@
 extends ../layout.pug
 
 block content
-  .row.row--hero.cover
-    .row__column
-      h1.--inverse=viewmodel.name
+  .container-fluid.cover
+    .vcenter
+      .col-xs-12.col-sm-6.col-sm-offset-3.text-center
+        h1.--inverse=viewmodel.name
   .container
     .row
       .col-md-12
         .panel.panel-default
-          .panel-heading.text-center Description
           .panel-body
-            p #{viewmodel.description}
+            .text-content
+              p #{viewmodel.description}
     .row
-      .col-xs-2
+      .col-xs-6.col-sm-4
         .panel.panel-default
-          .panel-heading Fatty
+          
           .panel-body 
-            if viewmodel.fatty
-              p This is a fatty food. Fatty foods pair well with high-acid wines.
-            else
-              p This is a low fat food and may be overpowered by high-acid wines.
-      .col-xs-3
+            .text-content
+              if viewmodel.fatty
+                p This is a fatty food. Fatty foods pair well with high-acid wines.
+              else
+                p This is a low fat food and may be overpowered by high-acid wines.
+          .panel-footer.text-center Fat
+      .col-xs-6.col-sm-4
         .panel.panel-default
-          .panel-heading Sweet
-          .panel-body 
-            if viewmodel.sweet
-              p This is a sweet food. Seek a wine that is as sweet or sweeter than this food.
-            else
-              p This food isn't sweet. Avoid highly sweet wines.
-      .col-xs-2
+          .panel-body
+            .text-content
+              if viewmodel.sweet
+                p This is a sweet food. Seek a wine that is as sweet or sweeter than this food.
+              else
+                p This food isn't sweet. Avoid highly sweet wines.
+          .panel-footer.text-center Sugar
+      .col-xs-6.col-sm-4
         .panel.panel-default
-          .panel-heading Dense
           .panel-body 
-            if viewmodel.dense
-              p This is a dense food. Seek a light, refreshing, or even sparkling wine.
-            else
-              p This is a light food and should be paired with a medium-body wine.
-      .col-xs-3
+            .text-content
+              if viewmodel.dense
+                p This is a dense food. Seek a light, refreshing, or even sparkling wine.
+              else
+                p This is a light food and should be paired with a medium-body wine.
+          .panel-footer.text-center Richness
+      .col-xs-6.col-sm-4
         .panel.panel-default
-          .panel-heading Starchy
           .panel-body 
-            if viewmodel.starchy
-              p This is a starchy food. Starchy foods pair well with high-acid wines.
-            else
-              p This is not a starchy food and may be overpowered by high-acid wines.
-      .col-xs-2
+            .text-content
+              if viewmodel.delicate
+                p This is a delicate food. Seek an unoaked white or red wine.
+              else
+                p This is a strong food. Seek oaked red wine.
+          .panel-footer.text-center Delicacy
+      .col-xs-6.col-sm-4
         .panel.panel-default
-          .panel-heading Delicate
           .panel-body 
-            if viewmodel.delicate
-              p This is a delicate food. Seek an unoaked white or red wine.
-            else
-              p This is a strong food. Seek oaked red wine.
-    h1.text-center Suggested wines
-    hr
+            .text-content
+              if viewmodel.acid
+                p This is a food high in acid. Try to match with a similarly acidic wine.
+              else
+                p This is a low acid food.
+          .panel-footer.text-center Acid
+      .col-xs-6.col-sm-4
+        .panel.panel-default
+          .panel-body 
+            .text-content
+              if viewmodel.salt
+                p This is a high-salt food. Avoid wines high in tannin.
+              else
+                p This isn't a salty food. 
+          .panel-footer.text-center Salt
+  div.hero-head.hero-head-primary
+    h2.text-center Suggested Wines
+  .container-fluid.highlight-primary
     .row
       each wine, index in viewmodel.suggested_wines
-        .col-md-2.hidden-sm.hidden-xs
-          .panel.panel-default
-            .panel-heading=wine.name
-            .panel-body.text-center
-              img(src="/static/images/" + wine.picture + ".jpg")
-              p #{wine.color} - #{wine.price}
-            .panel-footer.text-center
-              a.btn.btn-default(href="/wines/details/" + wine.id) See More
-        if index < 4
-          .col-xs-3.col-sm-3.hidden-md.hidden-lg
+        .col-xs-6.col-sm-3
+          a(href="/wines/details/" + wine.id)
             .panel.panel-default
-              .panel-heading=wine.name
-              .panel-body.text-center
-                img(src="/static/images/" + wine.picture + ".jpg")
-                p #{wine.color} - #{wine.price}
-              .panel-footer.text-center
-                a.btn.btn-default(href="/wines/details/" + wine.id) See More
+              .panel-body
+                .text-center
+                  div(style="background-image:url(\"/images/" + wine.picture + ".jpg\");height: 100px;")
+                    br
+                  .tile-text
+                    span=wine.name

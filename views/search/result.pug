@@ -1,53 +1,68 @@
 extends ../layout.pug
 
 block content
-  .container
-    h2.text-center Search Results
-    hr
-    .row
-      .col-md-12
-        .panel.panel-default
-          .panel-body
-            form(action="/search/results",method="get")
+  .container-fluid.cover(style="background-image: url('/images/cover.jpg');")
+    .vcenter
+      .col-xs-12.col-sm-6.col-sm-offset-3.text-center
+        h1.--inverse Search Results
+        form(action="/search/results",method="get")
               .input-group.text-center
                 input.form-control(name="query",value=viewmodel.search_query)
                 span.input-group-btn
                   button.btn.btn-default(type="submit") Search
+  .container
+    .row.hidden-xs(style="margin-top:15px;margin-bottom:15px;")
+      .col-sm-4.col-xs-12.col-md-4
+          h3.text-center Wines
+      .col-sm-4.col-xs-12.col-md-4
+          h3.text-center Producers
+      .col-sm-4.col-xs-12.col-md-4
+          h3.text-center Regions
+  .brand-stripe(style="margin-bottom:15px;")
+  .container
     .row
       .col-sm-4.col-xs-12.col-md-4
-        h3.text-center Wines
-        hr
+        div.hero-head.hero-head-primary.hidden-sm.hidden-md.hidden-lg.visible-xs
+          h3.text-center Wines
         .row
           each wine in viewmodel.wines
-            .col-xs-12.col-sm-12.col-md-6
-              .panel.panel-default
-                .panel-heading=wine.name
-                .panel-body.text-center
-                  img(src="/static/images/" + wine.picture + ".jpg")
-                  p #{wine.color} - #{wine.price}
-                .panel-footer.text-center
-                  a.btn.btn-default(href="/wines/details/" + wine.id) See More
+            .col-md-12
+              a(href="/wines/details/" + wine.id)
+                .panel.panel-default
+                  .panel-body
+                    .text-center
+                      div(style="background-image:url(\"/images/" + wine.picture + ".jpg\");height: 100px;")
+                        br
+                      .tile-text
+                        span=wine.name
+                      p #{wine.color} - #{wine.price}
       .col-sm-4.col-xs-12.col-md-4
-        h3.text-center Producers
-        hr
+        div.hero-head.hero-head-secondary.hidden-sm.hidden-md.hidden-lg.visible-xs
+          h3.text-center Producers
         .row
           each producer in viewmodel.producers
-            .col-xs-12.col-sm-12.col-md-6
-              .panel.panel-default
-                .panel-heading=producer.name
-                .panel-body.text-center
-                  img(src="/static/images/" + producer.picture + ".jpg")
-                .panel-footer.text-center
-                  a.btn.btn-default(href="/producers/details/" + producer.id) See More
+            .col-md-12
+              a(href="/producers/details/" + producer.id)
+                .panel.panel-default
+                  .panel-body
+                    .text-center
+                      div(style="background-image:url(\"/images/" + producer.picture + ".jpg\");height: 100px;")
+                        br
+                      .tile-text
+                        span=producer.name
+                      p &nbsp;
       .col-sm-4.col-xs-12.col-md-4
-        h3.text-center Regions
-        hr
+        div.hero-head.hero-head-tertiary.hidden-sm.hidden-md.hidden-lg.visible-xs
+          h3.text-center Regions
         .row
           each region in viewmodel.regions
-            .col-xs-12.col-sm-12.col-md-6
-              .panel.panel-default
-                .panel-heading=region.title
-                .panel-body.text-center
-                  img(src="/static/images/" + region.picture + ".jpg")
-                .panel-footer.text-center
-                  a.btn.btn-default(href="/regions/details/" + region.id) See More
+            .col-md-12
+              a(href="/regions/details/" + region.id)
+                .panel.panel-default
+                  .panel-body
+                    .text-center
+                      div(style="background-image:url(\"/images/" + region.picture + ".jpg\");height: 100px;")
+                        br
+                      .tile-text
+                        span=region.name
+                      p &nbsp;

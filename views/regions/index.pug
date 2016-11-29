@@ -1,47 +1,39 @@
 extends ../layout.pug
 
 block content
-  .container
-    h2.text-center Suggested Regions
-    hr
+  
+  div.hero-head.hero-head-primary
+    h2.text-center Top regions
+  .container-fluid.highlight-primary
     .row
       each region, index in viewmodel.selected_regions
-        .col-md-2.hidden-sm.hidden-xs
-          .panel.panel-default
-            .panel-heading=region.title
-            .panel-body.text-center
-              img(src="/static/images/" + region.picture + ".jpg")
-            .panel-footer.text-center
-              a.btn.btn-default(href="/regions/details/" + region.id) See More
-        if index < 4
-          .col-xs-3.col-sm-3.hidden-md.hidden-lg
+        .col-xs-6.col-sm-3
+          a(href="/regions/details/" + region.id)
             .panel.panel-default
-              .panel-heading=region.title
-              .panel-body.text-center
-                img(src="/static/images/" + region.picture + ".jpg")
-                p=region.climate
-              .panel-footer.text-center
-                a.btn.btn-default(href="/regions/details/" + region.id) See More
+              .panel-body
+                .text-center
+                  div(style="background-image:url(\"/images/" + region.picture + ".jpg\");height: 100px;")
+                    br
+                  .tile-text
+                    span=region.name
+  div.hero-head.hero-head-secondary
+    h2.text-center Browse regions
+  .container
     .row
-      .col-md-2
-        h4 Filters
-      .col-md-10
-        h3.text-center Browse Regions
-        hr
-        .row
-          each region in viewmodel.result_regions
-            .col-xs-3
-              .panel.panel-default
-                .panel-heading=region.title
-                .panel-body.text-center
-                  img(src="/static/images/" + region.picture + ".jpg")
-                  p=region.climate
-                .panel-footer.text-center
-                  a.btn.btn-default(href="/regions/details/" + region.id) See More
-        hr
-        .text-center
-          ul.pagination
-            - var n = 1;
-              while n <= viewmodel.count_pages
-                li
-                  a(href="/regions/" + n)=n++
+      each region in viewmodel.result_regions
+        .col-xs-6.col-sm-3
+          a(href="/regions/details/" + region.id)
+            .panel.panel-default
+              .panel-body
+                .text-center
+                  div(style="background-image:url(\"/images/" + region.picture + ".jpg\");height: 100px;")
+                    br
+                  .tile-text
+                    span=region.name
+    hr
+    .text-center
+      ul.pagination
+        - var n = 1;
+          while n <= viewmodel.count_pages
+            li
+              a(href="/regions/" + n)=n++
