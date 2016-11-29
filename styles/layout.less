@@ -16,11 +16,13 @@ body {
 }
 
 .cover { /** uses cover photo**/
-  background-image: url('/images/cover.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
+  height: 200px;
+  width: 100%;
+  display: table;
 }
 
 .row-janky {
@@ -205,6 +207,13 @@ body {
   padding-top: 10px;
 }
 
+.hero-head-tertiary {
+  background-color: @color-tertiary;
+  height: 50px;
+  padding-top: 10px;
+}
+
+
 img {
   height: 100px;
   width: 100px;
@@ -243,10 +252,21 @@ img {
       vertical-align: middle;
     }
   }
-
+  .text-content {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
 }
 
 .container {
   padding-top: @side-padding;
 }
 
+.vcenter {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+}
