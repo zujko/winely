@@ -94,7 +94,6 @@ getWine = function(wine_id, callback) {
          });
          query.on('end', () => {
            //CALCULATE FOODS
-           console.log(magicAlgo.recommend_food(wineResult));
            query = client.query(magicAlgo.recommend_food(wineResult));
            query.on('row', (row) => {
             foodResult.push(JSON.parse(JSON.stringify(row)));
