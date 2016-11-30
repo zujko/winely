@@ -1,7 +1,9 @@
 extends ../layout.pug
 
+
+
 block content
-  
+
   div.hero-head.hero-head-primary
     h2.text-center Top wines
   .container-fluid.highlight-primary
@@ -12,7 +14,7 @@ block content
             .panel.panel-default
               .panel-body
                 .text-center
-                  div(style="background-image:url(\"/images/" + wine.picture + ".jpg\");height: 100px;")
+                  div(style="background-image:url(\"/images/" + wine.picture + ".jpg\");height: 150px;")
                     br
                   .tile-text
                     span=wine.name
@@ -21,13 +23,14 @@ block content
     h2.text-center Browse wines
   .container
     .row
+
       each wine in viewmodel.result_wines
         .col-xs-6.col-sm-3
           a(href="/wines/details/" + wine.id)
             .panel.panel-default
               .panel-body
                 .text-center
-                  div(style="background-image:url(\"/images/" + wine.picture + ".jpg\");height: 100px;")
+                  div(style="background-image:url(\"/images/" +  viewmodel.magic.getPic(wine.id,'wine')+ ".jpg\");height: 150px;")
                     br
                   .tile-text
                     span=wine.name

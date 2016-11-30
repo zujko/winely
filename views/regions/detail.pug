@@ -17,6 +17,7 @@ block content
   .container-fluid.highlight-primary
     .row
       each wine, index in viewmodel.suggested_wines
+<<<<<<< Updated upstream
         .col-xs-6.col-sm-3
           a(href="/wines/details/" + wine.id)
             .panel.panel-default
@@ -43,11 +44,38 @@ block content
   div.hero-head.hero-head-tertiary
     h2.text-center Vintage History
   .container-fluid.highlight-secondary
+=======
+        .col-sm-3
+          .panel.panel-default
+            .panel-heading=wine.name
+            .panel-body.text-center
+              img(src="/static/images/" + viewmodel.magic.getPic(wine.id,"wine") + ".jpg",style="width:128px;height:128px;")
+              p #{wine.color} - #{wine.price}
+            .panel-footer.text-center
+              a.btn.btn-default(href="/wines/details/" + wine.id) See More
+    h1.text-center Suggested Producers
+    hr
+    .row
+      each producer, index in viewmodel.suggested_producers
+        .col-sm-3
+          .panel.panel-default
+            .panel-heading=producer.name
+            .panel-body.text-center
+              img(src="/static/images/" + viewmodel.magic.getPic(producer.id,"vineyard") + ".jpg",style="width:128px;height:128px;")
+            .panel-footer.text-center
+              a.btn.btn-default(href="/producers/details/" + producer.id) See More
+    h1.text-center Vintage History
+    hr
+>>>>>>> Stashed changes
     .row
       each vintage, index in viewmodel.vintages
         .col-sm-4
           .panel.panel-default
             .panel-heading=vintage.year
             .panel-body.text-center
+<<<<<<< Updated upstream
               .text-content
                 p #{vintage.description}
+=======
+              p #{vintage.description}
+>>>>>>> Stashed changes

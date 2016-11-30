@@ -15,7 +15,7 @@ router.get('/details/:id', function(req, res, next) {
   getFood(req.params.id, function(food_vm){
     res.render('foods/detail', { viewmodel: food_vm }); //callback because we're going to need async
   })
-  
+
 });
 
 router.get('/:page', function(req, res, next) {
@@ -29,14 +29,14 @@ getFoodBrowse = function(page, callback) {
   var count = 0;
   pg.connect(connectionString, (err, client, done) => {
     var query = client.query('SELECT * FROM foods LIMIT 20 OFFSET $1',[20*page]);
-    
+
     query.on('row', (row) => {
       foods.push(JSON.parse(JSON.stringify(row)));
     });
     query.on('end', () => {
       query = client.query('SELECT count(*) FROM foods');
       query.on('row', (row) => {
-        count = Number(JSON.parse(JSON.stringify(row)).count); 
+        count = Number(JSON.parse(JSON.stringify(row)).count);
       });
       query.on('end', () => {
         done();
@@ -50,7 +50,7 @@ getFoodBrowse = function(page, callback) {
         callback(viewmodel);
       });
     });
-  }); 
+  });
 }
 
 /**
@@ -84,9 +84,10 @@ getFood = function(food_id, callback) {
           delicate: foodResult.delicate,
           strong: foodResult.strong,
           description: foodResult.description,
-          suggested_wines: wineRec
+          suggested_wines: wineRec,
+          magic: magicPic
 
-        } 
+        }
         console.log(JSON.stringify(viewmodel));
         callback(viewmodel);
       });

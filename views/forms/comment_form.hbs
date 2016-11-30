@@ -1,0 +1,34 @@
+<form action="EXAMPLE_ACTION" method="post">
+
+  <h1>Comment Form</h1><br>
+
+  User:<br>
+  <select name="user">
+    {{#each users}}
+      <option value= "{{this.id}}" >{{this.name}}</option>
+    {{/each}}
+  </select><br>
+
+  Wine:<br>
+  <select name="wine">
+    {{#each wines}}
+      <option value= "{{this.id}}" >{{this.name}}</option>
+    {{/each}}
+  </select><br>
+
+  Title:<br>
+  <input type="text" name="title" required><br>
+
+  Timestamp:<br>
+  <input type="time" name="timestamp" step="1">
+
+  Body:<br>
+  <textarea name="body" rows="5" cols="20" required></textarea><br>
+
+  Stars:<br>
+  <input name="stars" type="likes" min="0" max ="5"><br>
+
+
+  <input type="submit" value="Submit">
+
+</form>

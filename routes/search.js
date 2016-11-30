@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const pg = require('pg');
+var magicPic = require('../magic_picture_selector');
 const connectionString = 'postgres://localhost:5432/winely';
 
 /* GET home page. */
@@ -42,7 +43,8 @@ getSearchResult = function(query, callback) {
             search_query: query,
             wines: wine,
             regions: region,
-            producers: vineyard
+            producers: vineyard,
+            magic:magicPic
           }
           callback(viewmodel);
         });

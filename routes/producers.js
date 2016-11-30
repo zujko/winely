@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const pg = require('pg');
+var magicPic = require('../magic_picture_selector');
 const connectionString = 'postgres://localhost:5432/winely';
 
 /* GET home page. */
@@ -14,7 +15,7 @@ router.get('/details/:id', function(req, res, next) {
   getproducer(req.params.id, function(producer_vm){
     res.render('producers/detail', { viewmodel: producer_vm }); //callback because we're going to need async
   })
-  
+
 });
 
 router.get('/:page', function(req, res, next) {
@@ -50,6 +51,7 @@ getProducerBrowse = function(page, callback) {
           selected_producers: selectedProducers.slice(1,6),
           result_producers: selectedProducers,
           current_page:page,
+          magic: magicPic,
           count_pages: Math.ceil(count/20)
         }
         callback(viewmodel);
@@ -71,7 +73,7 @@ getproducer = function(producer_id, callback) {
       done();
       console.log(err);
       callback({});
-    } 
+    }
     var query = client.query('SELECT * FROM vineyard WHERE id = $1', [producer_id]);
     query.on('row', (row) => {
       vineyard = JSON.parse(JSON.stringify(row));
@@ -99,7 +101,8 @@ getproducer = function(producer_id, callback) {
             lng: vineyard.location.y,
             description: vineyard.description,
             wines: wineResults,
-            region: region
+            region: region,
+            magic: magicPic
           }
           callback(viewmodel);
         });

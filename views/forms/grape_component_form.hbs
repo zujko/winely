@@ -1,0 +1,24 @@
+<form action="EXAMPLE_ACTION" method="post">
+
+  <h1>Grape Component Form</h1><br>
+
+  Wine:<br>
+  <select name="wine">
+    {{#each wines}}
+      <option value= "{{this.id}}" >{{this.name}}</option>
+    {{/each}}
+  </select><br>
+
+  Grape:<br>
+  <select name="grape">
+    {{#each grapes}}
+      <option value= "{{this.id}}" >{{this.name}}</option>
+    {{/each}}
+  </select><br>
+
+  Percent:<br>
+  <input name="percent" type="number" min="0" max ="100"><br>
+
+  <input type="submit" value="Submit">
+
+</form>

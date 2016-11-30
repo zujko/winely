@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const pg = require('pg');
+var magicPic = require('../magic_picture_selector');
 const connectionString = 'postgres://localhost:5432/winely';
 
 /* GET home page. */
@@ -14,7 +15,7 @@ router.get('/details/:id', function(req, res, next) {
   getRegion(req.params.id, function(region_vm){
     res.render('regions/detail', { viewmodel: region_vm }); //callback because we're going to need async
   })
-  
+
 });
 
 router.get('/:page', function(req, res, next) {
@@ -47,6 +48,7 @@ getRegionBrowse = function(page, callback) {
           title: "Browse Regions",
           selected_regions: selectedRegions.slice(1,5),
           result_regions: selectedRegions,
+          magic: magicPic,
           current_page: page,
           count_pages: Math.ceil(count/20)
         }
@@ -75,7 +77,7 @@ getRegion = function(region_id, callback) {
       query = client.query('SELECT * FROM vintage_attrs WHERE region_id=$1', [region_id]);
       query.on('row', (row) => {
         vintages.push(JSON.parse(JSON.stringify(row)));
-      });  
+      });
       query.on('end', () => {
         //PRODUCERS
         query = client.query('SELECT id, name FROM vineyard WHERE region_id=$1',[region_id]);
@@ -99,7 +101,8 @@ getRegion = function(region_id, callback) {
               description: regionResult.description,
               vintages: vintages,
               suggested_wines: wines,
-              suggested_producers: producers
+              suggested_producers: producers,
+              magic: magicPic
             }
             callback(viewmodel);
           });
