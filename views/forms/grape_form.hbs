@@ -1,0 +1,41 @@
+<form action="EXAMPLE_ACTION" method="post">
+
+  <h1>Grape Form</h1><br>
+
+  Name:<br>
+  <input type="text" name="name" required><br>
+
+  Description:<br>
+  <textarea name="description" rows="5" cols="20" required></textarea><br>
+
+  Thumbnail Picture:<br>
+  <select name="thumbnail">
+    {{#each pictures}}
+      <option value= "{{this.id}}" >{{this.id}}</option>
+    {{/each}}
+  </select><br>
+
+  Berry Skin Color:<br>
+  <input type="text" name="berry_skin_color" required><br>
+
+  Also Known As:<br>
+  <input type="text" name="also_known_as" required><br>
+
+  Ideal Soil:<br>
+  <input type="text" name="ideal_soil" required><br>
+
+  General:<br>
+  <input type="text" name="general" required><br>
+
+  Cool:<br>
+  <input type="text" name="cool" required><br>
+
+  Mid:<br>
+  <input type="text" name="mid" required><br>
+
+  Hot<br>
+  <input type="text" name="hot" required><br>
+
+  <input type="submit" value="Submit">
+
+</form>

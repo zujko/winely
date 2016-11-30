@@ -19,13 +19,14 @@ block content
     h2.text-center Browse Producers
   .container
     .row
+
       each producer in viewmodel.result_producers
         .col-xs-6.col-sm-3
           a(href="/producers/details/" + producer.id)
             .panel.panel-default
               .panel-body
                 .text-center
-                  div(style="background-image:url(\"/images/" + producer.picture + ".jpg\");height: 100px;")
+                  div(style="background-image:url(\"/images/" +  viewmodel.magic.getPic(producer.id,'vineyard')+ ".jpg\");height: 100px;")
                     br
                   .tile-text
                     span=producer.name

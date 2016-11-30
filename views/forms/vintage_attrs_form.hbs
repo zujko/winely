@@ -1,0 +1,21 @@
+<form action="EXAMPLE_ACTION" method="post">
+
+  <h1>Vintage Attrs Form</h1><br>
+
+  Year:<br>
+  <input name="stars" type="year" min="0" max ="2020"><br>
+
+  Region:<br>
+  <select name="region">
+    {{#each regions}}
+      <option value= "{{this.id}}" >{{this.name}}</option>
+    {{/each}}
+  </select><br>
+
+  Comment:<br>
+  <textarea name="comment" rows="5" cols="20" required></textarea><br>
+
+
+  <input type="submit" value="Submit">
+
+</form>

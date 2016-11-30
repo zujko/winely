@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var magicAlgo = require('../magic_algorithm');
+var magicPic = require('../magic_picture_selector');
 const pg = require('pg');
 const connectionString = 'postgres://localhost:5432/winely';
 
@@ -15,7 +16,7 @@ router.get('/details/:id', function(req, res, next) {
   getWine(req.params.id, function(wine_vm){
     res.render('wines/detail', { viewmodel: wine_vm }); //callback because we're going to need async
   })
-  
+
 });
 
 router.get('/:page', function(req, res, next) {
@@ -34,7 +35,8 @@ getWineBrowse = function(page, callback) {
     var selected_wines = [];
     var count = 0;
     var query = client.query('SELECT id, name, color, price FROM wine LIMIT 20 OFFSET $1',[20*page]);
-    query.on('row', (row) => {
+    query.on('row', (row) =>
+    {
       selected_wines.push(JSON.parse(JSON.stringify(row)));
     });
     query.on('end', () => {
@@ -49,12 +51,13 @@ getWineBrowse = function(page, callback) {
           selected_wines: selected_wines.slice(1,5),
           result_wines: selected_wines,
           current_page: page,
-          count_pages: Math.ceil(count/20)
-        } 
+          magic: magicPic,
+          count_pages: Math.ceil(count/20),
+        }
         callback(viewmodel);
       });
     });
-  });  
+  });
 }
 
 /**
@@ -78,7 +81,7 @@ getWine = function(wine_id, callback) {
       wineResult = JSON.parse(JSON.stringify(row));
     });
     query.on('end',() => {
-      query = client.query('SELECT * FROM vineyard WHERE id=$1',[wineResult.vineyard_id]); 
+      query = client.query('SELECT * FROM vineyard WHERE id=$1',[wineResult.vineyard_id]);
       query.on('row', (row) => {
         vineyardResult = JSON.parse(JSON.stringify(row));
       });
@@ -108,7 +111,7 @@ getWine = function(wine_id, callback) {
               wineVmCallback(wineResult, vineyardResult, vintageResult, regionResult, foodResult, grapeCompResult, callback, done, client);
              });
            });
-         }); 
+         });
         });
       });
     });
@@ -153,7 +156,7 @@ wineVmCallback = function(wine, vineyard, vintage, region,food, grapeComp, callb
         picture_cover: "88df6a51-5c59-45b8-a71b-1f2439ebe637",
         picture_thumb: "c53529fe-08bf-4b57-bab5-3e19e58742b3"
       },
-      foods: foodResult, 
+      foods: foodResult,
     grape_blend: grapeComp,
     reviews: [{
       title: "Great Wine!",

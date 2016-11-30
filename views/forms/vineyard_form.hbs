@@ -1,0 +1,33 @@
+<form action="EXAMPLE_ACTION" method="post">
+
+  <h1>Vineyard Form</h1><br>
+
+  Name:<br>
+  <input type="text" name="name" required><br>
+
+  Latitude:<br>
+  <input name = "latitude" type="number" min = "-90" max="90"><br>
+
+  Longitude:<br>
+  <input name = "longitude" type="number" min="-180" max ="180"><br>
+
+  Description:<br>
+  <textarea name="description" rows="5" cols="20" required></textarea><br>
+
+  Thumbnail Picture:<br>
+  <select name="thumbnail">
+    {{#each pictures}}
+      <option value= "{{this.id}}" >{{this.id}}</option>
+    {{/each}}
+  </select><br>
+
+  Cover Picture:<br>
+  <select name="cover">
+    {{#each pictures}}
+      <option value= "{{this.id}}" >{{this.id}}</option>
+    {{/each}}
+  </select><br>
+
+  <input type="submit" value="Submit">
+
+</form>

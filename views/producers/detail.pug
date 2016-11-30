@@ -16,13 +16,14 @@ block content
     h2.text-center All Wines
   .container-fluid.highlight-primary
     .row
+
       each wine in viewmodel.wines
           .col-xs-6.col-sm-3
             a(href="/wines/details/" + wine.id)
               .panel.panel-default
                 .panel-body
                   .text-center
-                    div.imgcard(style="background-image:url(\"/images/" + wine.picture + ".jpg\");")
+                    div.imgcard(style="background-image:url(\"/images/" + viewmodel.magic.getPic(wine.id,"wine") + ".jpg\");")
                       br
                     .tile-text
                       span=wine.name
