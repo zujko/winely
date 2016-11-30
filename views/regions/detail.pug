@@ -22,7 +22,7 @@ block content
             .panel.panel-default
               .panel-body
                 .text-center
-                  div(style="background-image:url(\"/images/" + wine.picture + ".jpg\");height: 100px;")
+                  div.imgcard(style="background-image:url(\"/images/" + wine.picture + ".jpg\");")
                     br
                   .tile-text
                     span=wine.name
@@ -36,7 +36,7 @@ block content
             .panel.panel-default
               .panel-body
                 .text-center
-                  div(style="background-image:url(\"/images/" + producer.picture + ".jpg\");height: 100px;")
+                  div.imgcard(style="background-image:url(\"/images/" + producer.picture + ".jpg\");")
                     br
                   .tile-text
                     span=producer.name
@@ -50,4 +50,4 @@ block content
             .panel-heading=vintage.year
             .panel-body.text-center
               .text-content
-                p #{vintage.description}
+                p #{vintage.comment_}

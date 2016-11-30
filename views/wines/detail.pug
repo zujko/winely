@@ -62,7 +62,7 @@ block content
   .container-fluid.cover(style="background-image: url('/images/" + viewmodel.vintage.region.picture + ".jpg');")
     .vcenter
       .col-xs-12.col-sm-6.col-sm-offset-3.text-center
-        h1.--inverse #{viewmodel.vintage.year} #{viewmodel.vintage.region.name}
+        h1.--inverse #{viewmodel.vintage.year} #{viewmodel.vintage.region.title}
         p.text-center(style="color:white;")=viewmodel.vintage.comment
         br
         a.btn.btn-default(href="/regions/" + viewmodel.vintage.region.id) Learn More
