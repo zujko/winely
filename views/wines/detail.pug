@@ -1,7 +1,7 @@
 extends ../layout.pug
 
 block content
-  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.picture + ".jpg');")
+  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.magic.getPic(viewmodel.id,'wine') + ".jpg');")
     .vcenter
       .col-xs-12.col-sm-6.col-sm-offset-3.text-center
         h1.--inverse=viewmodel.title
@@ -10,7 +10,7 @@ block content
   .container
     .row
       .col-xs-3.text-center
-        h2=viewmodel.percentAlcohol
+        h2 #{viewmodel.percentAlcohol}%
       .col-xs-3.text-center
         h2=viewmodel.price
       .col-xs-3.text-center
@@ -18,13 +18,14 @@ block content
       .col-xs-3.text-center
         h2=viewmodel.vintage.year
     .brand-stripe
-  .container
-    .row
-      .col-md-12
-        .panel.panel-default
-          .panel-body
-            .text-content
-              p #{viewmodel.summary}
+  if (viewmodel.summary != None)
+    .container
+      .row
+        .col-md-12
+          .panel.panel-default
+            .panel-body
+              .text-content
+                p #{viewmodel.summary}
   .container
     .row
       .col-xs-12.col-sm-6.col-md-3
@@ -51,7 +52,7 @@ block content
             .text-content
               h1.text-center(style="color:black;") #{viewmodel.tannin * 10} / 10
           .panel-footer.text-center Tannin
-  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.vineyard.picture + ".jpg');")
+  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.magic.getPic(viewmodel.vineyard.id,'vineyard') + ".jpg');")
     .vcenter
       .col-xs-12.col-sm-6.col-sm-offset-3.text-center
         h1.--inverse=viewmodel.vineyard.name
@@ -59,11 +60,11 @@ block content
         br
         a.btn.btn-default(href="/producers/details/" + viewmodel.vineyard.id) Learn More
   .brand-stripe
-  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.vintage.region.picture + ".jpg');")
+  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.magic.getPic(viewmodel.vintage.region.id,'region') + ".jpg');")
     .vcenter
       .col-xs-12.col-sm-6.col-sm-offset-3.text-center
-        h1.--inverse #{viewmodel.vintage.year} #{viewmodel.vintage.region.title}
-        p.text-center(style="color:white;")=viewmodel.vintage.comment
+        h1.--inverse #{viewmodel.vintage.region.name}
+        p.text-center(style="color:white;")=viewmodel.vintage.region.description
         br
         a.btn.btn-default(href="/regions/" + viewmodel.vintage.region.id) Learn More
   div.hero-head.hero-head-primary
@@ -76,7 +77,7 @@ block content
             .panel.panel-default
               .panel-body
                 .text-center
-                  div(style="background-image:url(\"/images/" + food.picture + ".jpg\");height: 100px;")
+                  div.imgcard(style="background-image:url(\"/images/" + viewmodel.magic.getPic(food.id,'food') + ".jpg\");height: 100px;")
                     br
                   .tile-text
                     span=food.name

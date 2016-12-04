@@ -1,7 +1,7 @@
 extends ../layout.pug
 
 block content
-  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.picture + ".jpg');")
+  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.magic.getPic(viewmodel.id,"vineyard")+ ".jpg');")
     .vcenter
       .col-xs-12.col-sm-6.col-sm-offset-3.text-center
         h1.--inverse=viewmodel.name
@@ -29,7 +29,7 @@ block content
                       span=wine.name
                     p #{wine.color} - #{wine.price}
   .brand-stripe
-  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.region.picture + ".jpg');")
+  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.magic.getPic(viewmodel.region.id,'region') + ".jpg');")
     .vcenter
       .col-xs-12.col-sm-6.col-sm-offset-3.text-center
         h1.--inverse #{viewmodel.region.title}

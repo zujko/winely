@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var magicAlgo = require('../magic_algorithm');
+var magicPic = require('../magic_picture_selector');
 const pg = require('pg');
 const connectionString = 'postgres://localhost:5432/winely';
 
@@ -45,6 +46,7 @@ getFoodBrowse = function(page, callback) {
           selected_foods: foods.slice(1,5),
           result_foods: foods,
           current_page: page,
+          magic: magicPic,
           count_pages: Math.ceil(count/20)
         }
         callback(viewmodel);
@@ -84,9 +86,8 @@ getFood = function(food_id, callback) {
           delicate: foodResult.delicate,
           strong: foodResult.strong,
           description: foodResult.description,
-          suggested_wines: wineRec,
-          magic: magicPic
-
+          magic: magicPic,
+          suggested_wines: wineRec
         }
         console.log(JSON.stringify(viewmodel));
         callback(viewmodel);

@@ -138,12 +138,15 @@ wineVmCallback = function(wine, vineyard, vintage, region,food, grapeComp, callb
       fruity: wine.fruity,
       spicy: wine.spicy,
       tart: wine.tart,
+      magic: magicPic,
+      id: wine.id,
       summary: wine.label_description,
       vintage: {
-        year: vintage.year, //wine
+        year: wine.vintage, //wine
         comment: vintage.comment_, //db.vintage
         region: { //pulled from vineyard
-          name: region.name,
+          name: region.title,
+          description: region.description,
           id: region.id
         }
       },
@@ -173,6 +176,9 @@ wineVmCallback = function(wine, vineyard, vintage, region,food, grapeComp, callb
       user: {name: "Sally R.", id: "c8fac4ed-55c2-4c94-8d8d-52dbdf9a8c79"}
     }],
     rating: 4.5 //computed from reviews above
+  }
+  if (viewmodel.vintage.year == ''){
+    viewmodel.vintage.year = 'NV'
   }
   callback(viewmodel)
   });

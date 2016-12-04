@@ -1,7 +1,7 @@
 extends ../layout.pug
 
 block content
-  .container-fluid.cover
+  .container-fluid.cover(style="background-image: url('/images/" + viewmodel.magic.getPic(viewmodel.id,'food') + ".jpg');")
     .vcenter
       .col-xs-12.col-sm-6.col-sm-offset-3.text-center
         h1.--inverse=viewmodel.name
@@ -78,7 +78,7 @@ block content
             .panel.panel-default
               .panel-body
                 .text-center
-                  div.imgcard(style="background-image:url(\"/images/" + wine.picture + ".jpg\");")
+                  div.imgcard(style="background-image:url(\"/images/" + viewmodel.magic.getPic(wine.id,'wine') +".jpg\");")
                     br
                   .tile-text
                     span=wine.name

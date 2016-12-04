@@ -1,16 +1,16 @@
 insert into foods (name, fatty, sweet, dense, starchy, salty, acid, delicate, strong, description) VALUES
-('Buffalo Wings', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Ideal for sporting-related wine events.'),
+('Buffalo Wings', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'TRUE', 'Ideal for sporting-related wine events.'),
 ('Chocolate Cake', 'TRUE', 'TRUE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
 ('Brownies', 'TRUE', 'TRUE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
 ('Tacos', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Tacos and Wine? Why not.'),
-('Nachos', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Nachos and wine? Why not?'),
-('Sausage Breakfast Sandwich', 'TRUE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Wine at breakfast? Questionable. Breakfast for dinner with wine? A+ choice'),
-('Dorritos', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Ideal for sporting-related wine events.'),
-('Salad', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
-('Almonds', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
+('Nachos', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Nachos and wine? Why not?'),
+('Sausage Breakfast Sandwich', 'TRUE', 'FALSE', 'TRUE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Wine at breakfast? Questionable. Breakfast for dinner with wine? A+ choice'),
+('Dorritos', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for sporting-related wine events.'),
+('Salad', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
+('Almonds', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'Ideal for any wine event.'),
 ('Peanuts', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'FALSE', 'TRUE', 'Tacos and Wine? Why not.'),
-('Cheese', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'TRUE', 'Nachos and wine? Why not?'),
-('Bread', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE','TRUE','FALSE', 'Wine at breakfast? Questionable. Breakfast for dinner with wine? A+ choice'),
+('Cheese', 'TRUE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'Nachos and wine? Why not?'),
+('Bread', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'FALSE', 'FALSE','TRUE','FALSE', 'Wine at breakfast? Questionable. Breakfast for dinner with wine? A+ choice'),
 ('Crackers', 'FALSE', 'FALSE', 'FALSE', 'TRUE', 'TRUE', 'FALSE', 'TRUE', 'FALSE', NULL);
 
 insert into grape 
@@ -105,22 +105,22 @@ VALUES
 insert into wine
 (id,name,vintage,vineyard_id,Alcohol,sugar,acid,brix,body,color,is_red,tannin,fruity,spicy,tart,label_description,price)
 VALUES
-('c7a3964d-d26b-4955-946f-6cf88140e631', 'King Estate', '2014', 'c9d220e4-fee5-4d47-b628-6eac56ada5f7', '13.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$15'),
-('4795ced1-ce35-4b88-ae35-51d9caac5227', 'Night Harvest Cabernet Sauvignon', 0, '3ef83845-622f-4db6-b2a4-08ba3e69c926', '13.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$6'),
-('f45d7509-68c6-469b-b4a2-69a293654575', 'Domaine Hugel et Fils', '2013', '27e85cfe-8069-4a19-8edb-3c01159c85dc', '14.00', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$19'),
-('bb1fdc96-5f4c-49e3-8097-effc3fcb89e1', 'Ruffino Modus', '2012', 'a8744a0b-0a0d-46a8-8136-400ddfbb56e0', '13.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$23'),
-('54d13c5d-2481-4069-beee-d14be1da7648', 'Ferrari-Carano Siena', '2013', 'b5114335-764f-405e-90a9-e24090b8c4ad', '14.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$18'),
-('40538a18-0657-4eaf-b15f-287f84647af2', 'Two Oceans', '2013', '89a95050-b91b-44a6-9bf5-08caa3ac63f7', '12.00', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$12'),
-('44d6f4be-b50e-4961-9a42-62f3a8e9da58', 'Relax', '2014', '9f4b40b9-e527-44a0-8563-74c2c8434adb', '8.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$8'),
-('153e3ea2-36e8-424f-bb60-dd8277c4809d', 'Toasted Head', '2013', '112e9423-b36c-427f-9632-b281b7e4a993', '14.00', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$11'),
-('0673badf-c577-41d5-bef8-c63b61185ed7', 'Sidewise', '2013', 'fca77bde-44f3-4c70-b2a8-30e5b223ea72', '12.00', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$8'),
-('f1ffcdb6-0d8c-496d-abbb-ea9e1c668236', 'Simi Merlot', '2012', '2b216ea6-9d7d-43d4-9530-90037d0d87e3', '13.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$15'),
+('c7a3964d-d26b-4955-946f-6cf88140e631', 'King Estate', '2014', 'c9d220e4-fee5-4d47-b628-6eac56ada5f7', '13.50', '.5', '.2', '.1', '.6', 'Red', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$15'),
+('4795ced1-ce35-4b88-ae35-51d9caac5227', 'Night Harvest Cabernet Sauvignon', 0, '3ef83845-622f-4db6-b2a4-08ba3e69c926', '13.50', '.5', '.2', '.1', '.6', 'Red', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$6'),
+('f45d7509-68c6-469b-b4a2-69a293654575', 'Domaine Hugel et Fils', '2013', '27e85cfe-8069-4a19-8edb-3c01159c85dc', '14.00', '.5', '.2', '.1', '.6', 'White', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$19'),
+('bb1fdc96-5f4c-49e3-8097-effc3fcb89e1', 'Ruffino Modus', '2012', 'a8744a0b-0a0d-46a8-8136-400ddfbb56e0', '13.50', '.5', '.2', '.1', '.6', 'Red', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$23'),
+('54d13c5d-2481-4069-beee-d14be1da7648', 'Ferrari-Carano Siena', '2013', 'b5114335-764f-405e-90a9-e24090b8c4ad', '14.50', '.5', '.2', '.1', '.6', 'Red', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$18'),
+('40538a18-0657-4eaf-b15f-287f84647af2', 'Two Oceans', '2013', '89a95050-b91b-44a6-9bf5-08caa3ac63f7', '12.00', '.5', '.2', '.1', '.6', 'Red', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$12'),
+('44d6f4be-b50e-4961-9a42-62f3a8e9da58', 'Relax', '2014', '9f4b40b9-e527-44a0-8563-74c2c8434adb', '8.50', '.5', '.2', '.1', '.6', 'White', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$8'),
+('153e3ea2-36e8-424f-bb60-dd8277c4809d', 'Toasted Head', '2013', '112e9423-b36c-427f-9632-b281b7e4a993', '14.00', '.5', '.2', '.1', '.6', 'Red', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$11'),
+('0673badf-c577-41d5-bef8-c63b61185ed7', 'Sidewise', '2013', 'fca77bde-44f3-4c70-b2a8-30e5b223ea72', '12.00', '.5', '.2', '.1', '.6', 'Red', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$8'),
+('f1ffcdb6-0d8c-496d-abbb-ea9e1c668236', 'Simi Merlot', '2012', '2b216ea6-9d7d-43d4-9530-90037d0d87e3', '13.50', '.5', '.2', '.1', '.6', 'Red', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$15'),
 ('0d897d09-1891-4c86-9e6c-4f379984b13c', 'Simi Cabernet Sauvignon', '2012', '2b216ea6-9d7d-43d4-9530-90037d0d87e3', '13.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$20'),
 ('ba602c13-9a70-4577-aae0-1a08f89f3cec', 'Brundlmayer Steinmassel', '2014', '25fd52ed-48a2-4441-b484-0bbd5a1dbe17', '12.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$30'),
 ('90cf0fff-9c5a-425e-b907-f60e0fb09ced', 'Lucien Albrecht Reserve', '2012', '357ac169-8f9e-4f70-8a3a-1bc4281039bc', '12.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$15'),
-('65e1303e-ac3d-4d3a-b2e7-357198a9f541', 'St. Urbans-Hof Kabinett', '2012', '0c35f94e-8825-487f-936e-6765ad704d67', '8.00', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$22'),
-('70d9b093-d517-4a65-ad64-f66d9e98642f', 'St. Urbans-Hof Spatlese', '2012', '0c35f94e-8825-487f-936e-6765ad704d67', '8.00', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$35'),
-('67f870d1-534f-4a2a-8d98-beb14ed958e3', 'Dr. Frank Dry Riesling', '2014', 'a8f137b8-99e2-46e5-a7d7-f83db399d6d1', '12.50', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$12'),
+('65e1303e-ac3d-4d3a-b2e7-357198a9f541', 'St. Urbans-Hof Kabinett', '2012', '0c35f94e-8825-487f-936e-6765ad704d67', '8.00', '.5', '.2', '.1', '.6', 'White', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$22'),
+('70d9b093-d517-4a65-ad64-f66d9e98642f', 'St. Urbans-Hof Spatlese', '2012', '0c35f94e-8825-487f-936e-6765ad704d67', '8.00', '.5', '.2', '.1', '.6', 'White', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$35'),
+('67f870d1-534f-4a2a-8d98-beb14ed958e3', 'Dr. Frank Dry Riesling', '2014', 'a8f137b8-99e2-46e5-a7d7-f83db399d6d1', '12.50', '.5', '.2', '.1', '.6', 'White', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$12'),
 ('5836d664-14ed-49c7-8e65-4fd93fc9b5d8', 'Chateau Ste. Michelle Riesling', '2014', '3bf1323a-280b-4df0-b3b8-9c1f7dc393d2', '12.00', '.5', '.2', '.1', '.6', 'ORANGE', TRUE, '.7', FALSE, TRUE, FALSE, NULL, '$8');
 
 insert into grape_component

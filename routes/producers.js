@@ -48,7 +48,7 @@ getProducerBrowse = function(page, callback) {
         console.log(Math.ceil(count/20));
         viewmodel = {
           title: "Browse producers",
-          selected_producers: selectedProducers.slice(1,6),
+          selected_producers: selectedProducers.slice(1,5),
           result_producers: selectedProducers,
           current_page:page,
           magic: magicPic,
